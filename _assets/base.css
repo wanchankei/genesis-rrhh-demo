@@ -1,0 +1,118 @@
+/* Genesis RRHH — base común de los 3 prototipos: tokens de marca, reset, ficha Gn y fichas de servicio */
+:root{
+  --ink:#16181D; --ink2:#2E3037; --paper:#F5F2EC; --fog:#E4DFD6; --line:#E2DDD3; --stone:#CFC7B8;
+  --mute:#8A857C; --graphite:#6B675F; --white:#fff; --red:#E5412D;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gut:clamp(16px,4vw,48px); --max:1440px;
+  --f-d:"Inter Tight",system-ui,sans-serif; --f-b:"Inter",system-ui,sans-serif; --f-m:"IBM Plex Mono",ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-b);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:clip}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+h1,h2,h3,h4,p{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+::selection{background:var(--ink);color:var(--paper)}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+.mono{font-family:var(--f-m);font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.tbd{border-bottom:1px dashed var(--mute)}
+.tbd::after{content:" [COMPLETAR]";font:500 9px var(--f-m);letter-spacing:.06em;color:var(--mute);vertical-align:super}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Foto: monocromo cálido, siempre */
+.ph{background:var(--fog);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.16) contrast(1.04) brightness(1.02);mix-blend-mode:multiply}
+
+/* Ficha madre «Gn» (del manual) */
+.gn{--t:160px;width:var(--t);height:var(--t);border-radius:calc(var(--t)*.07);background:var(--ink);color:var(--paper);position:relative;flex:none;overflow:hidden}
+.gn .n1{position:absolute;left:10%;top:8.5%;font:500 calc(var(--t)*.1)/1 var(--f-d);font-variant-numeric:tabular-nums}
+.gn .d{position:absolute;right:11%;top:11%;width:8%;height:8%;border-radius:50%;background:var(--red)}
+.gn .g{position:absolute;left:0;right:0;bottom:15%;text-align:center;font:700 calc(var(--t)*.5)/.72 var(--f-d);letter-spacing:-.06em;padding-right:.04em;white-space:nowrap}
+.gn .g span{display:inline-block}
+.gn.fav .n1{display:none}.gn.fav .g{font-size:calc(var(--t)*.6);bottom:17%}.gn.fav .d{width:13%;height:13%;right:9%;top:9%}
+
+/* Ficha de servicio */
+.el{--t:132px;width:var(--t);height:var(--t);border-radius:calc(var(--t)*.07);background:var(--white);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);padding:calc(var(--t)*.09);display:flex;flex-direction:column;justify-content:space-between;flex:none}
+.el .z{font:500 calc(var(--t)*.08)/1 var(--f-m)}
+.el .s{font:700 calc(var(--t)*.4)/.85 var(--f-d);letter-spacing:-.06em}
+.el .nm{font:500 calc(var(--t)*.062)/1.2 var(--f-b);letter-spacing:.04em;text-transform:uppercase;opacity:.6}
+.el.k{background:var(--ink);color:var(--paper);box-shadow:inset 0 0 0 1px var(--ink2)}
+
+/* Lockup */
+.lk{display:inline-flex;align-items:center;gap:.42em;font:700 22px/1 var(--f-d);letter-spacing:-.035em}
+.lk .gn{--t:1.55em}
+
+
+/* Botón (estilo Peonex): píldora de 42 px, tinta o vidrio con borde de 1 px. En hover el texto rueda hacia
+   arriba y la flecha sale por arriba a la derecha mientras la copia entra desde abajo a la izquierda. */
+.btn{--eo:cubic-bezier(.23,1,.32,1);position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;height:42px;padding:0 20px 0 22px;border-radius:8px;font:500 15px/1 var(--f-d);letter-spacing:-.005em;background:var(--ink);color:var(--paper);border:1px solid rgba(245,242,236,.15);-webkit-backdrop-filter:blur(15px);backdrop-filter:blur(15px);cursor:pointer;white-space:nowrap;transition:background-color .3s var(--eo),transform .14s var(--eo)}
+.btn .tb{display:grid;overflow:hidden;height:1.2em;line-height:1.2em}
+.btn .tb span{grid-area:1/1;transition:transform .45s var(--eo)}
+.btn .tb span+span{transform:translateY(100%)}
+.btn .ab{display:grid;overflow:hidden;width:16px;height:16px;flex:none}
+.btn .ab svg{grid-area:1/1;width:16px;height:16px;transition:transform .45s var(--eo)}
+.btn .ab svg+svg{transform:translate(-100%,100%)}
+.btn.glass{background:rgba(245,242,236,.1);color:var(--paper);border-color:rgba(245,242,236,.22)}
+.btn.ghost{background:rgba(22,24,29,.04);color:var(--ink);border-color:rgba(22,24,29,.14)}
+.btn.sm{height:36px;padding:0 14px 0 16px;font-size:14px;gap:8px}
+.btn:active{transform:scale(.97)}
+@media (hover:hover) and (pointer:fine){
+  .btn:hover .tb span{transform:translateY(-100%)}
+  .btn:hover .tb span+span{transform:translateY(0)}
+  .btn:hover .ab svg{transform:translate(100%,-100%)}
+  .btn:hover .ab svg+svg{transform:translate(0,0)}
+  .btn:not(.glass):not(.ghost):hover{background:var(--ink2)}
+  .btn.glass:hover{background:rgba(245,242,236,.16)}
+  .btn.ghost:hover{background:rgba(22,24,29,.08)}
+}
+@media (prefers-reduced-motion:reduce){.btn .tb span,.btn .ab svg{transition:none}}
+
+/* FAQ nativo */
+.faq details{border-top:1px solid var(--line)}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;min-height:64px;padding:18px 0;font:600 clamp(17px,1.6vw,20px)/1.3 var(--f-d);letter-spacing:-.015em}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{flex:none;width:14px;height:14px;position:relative}
+.faq summary i::before,.faq summary i::after{content:"";position:absolute;left:0;right:0;top:50%;height:1.5px;background:currentColor;transition:transform .25s cubic-bezier(.23,1,.32,1),background-color .2s ease}
+.faq summary i::after{transform:rotate(90deg)}
+.faq details[open] summary i::after{transform:rotate(0)}
+.faq details .fc{overflow:hidden}
+.faq details p{padding:0 48px 24px 0;color:var(--graphite);max-width:720px}
+
+/* Formulario */
+.form{display:grid;gap:14px}
+.form label{display:grid;gap:6px;font:500 13px var(--f-b);color:var(--graphite)}
+.form input,.form textarea,.form select{width:100%;min-height:48px;padding:12px 14px;background:var(--white);border:1px solid var(--line);border-radius:6px;color:var(--ink);transition:border-color .2s}
+.form textarea{min-height:120px;resize:vertical}
+.form input:focus,.form textarea:focus,.form select:focus{outline:none;border-color:var(--ink)}
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.form .row{grid-template-columns:1fr}}
+
+/* Menú mobile común */
+.burger{display:none;width:48px;height:48px;border:0;background:none;cursor:pointer;position:relative}
+.burger::before,.burger::after{content:"";position:absolute;left:13px;right:13px;height:1.5px;background:currentColor;transition:transform .3s var(--ease)}
+.burger::before{top:19px}.burger::after{top:28px}
+.nav-open .burger::before{transform:translateY(4.5px) rotate(45deg)}
+.nav-open .burger::after{transform:translateY(-4.5px) rotate(-45deg)}
+
+/* Lenis */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* Sin motion */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Punto rojo génesis como puntuación: «El elemento humano●» */
+.dot{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:var(--red);margin-left:.04em;vertical-align:baseline}
+.faq details[open]{border-top-color:var(--red)}
+.faq details[open] summary i::before{background:var(--red)}
+
+/* Etiqueta chica (reemplaza la mono como disfraz) y cifras dichas en una frase, no en la plantilla de métricas */
+.lbl{font:600 13px/1.3 var(--f-d);letter-spacing:-.005em;color:var(--graphite)}
+.claim{font:600 clamp(30px,4vw,56px)/1.1 var(--f-d);letter-spacing:-.035em;max-width:26ch;text-wrap:balance}
+.claim b{font-weight:700;color:var(--red)}
+.claim .tbd::after{content:none}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Legales · Genesis RRHH</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_assets/base.css">
+<style>
+/* Legales: misma piel que la home (papel, tinta, punto rojo), header y pie simplificados */
+:root{--eo:cubic-bezier(.23,1,.32,1)}
+.wrap{max-width:none}
+.hd{position:sticky;top:0;z-index:50;background:rgba(245,242,236,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.hd .lk{font-size:18px}
+.hd .btn{height:36px;padding:0 16px;background:rgba(22,24,29,.04);color:var(--ink);border-color:rgba(22,24,29,.16)}
+
+.top{padding-top:clamp(64px,9vw,128px);padding-bottom:clamp(40px,5vw,64px);border-bottom:1px solid var(--line)}
+.top h1{font:700 clamp(56px,8vw,128px)/.9 var(--f-d);letter-spacing:-.055em}
+.top p{color:var(--graphite);margin-top:20px;max-width:56ch}
+
+.doc{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(80px,10vw,144px)}
+.doc aside{grid-column:1/4;position:sticky;top:96px;align-self:start;display:grid;gap:2px}
+.doc aside a{padding:10px 12px;border-radius:6px;font:500 14px var(--f-b);color:var(--graphite);transition:background-color .2s,color .2s}
+@media (hover:hover){.doc aside a:hover{background:var(--fog);color:var(--ink)}}
+.doc aside a.on{background:var(--red);color:var(--white)}
+.doc article{grid-column:5/12;max-width:68ch}
+.doc section{padding-bottom:48px;margin-bottom:48px;border-bottom:1px solid var(--line);scroll-margin-top:88px}
+.doc section:last-child{border:0;margin:0}
+.doc h2{font:700 clamp(28px,3vw,40px)/1.05 var(--f-d);letter-spacing:-.035em;margin-bottom:20px}
+.doc h3{font:600 18px/1.3 var(--f-d);letter-spacing:-.015em;margin:28px 0 8px}
+.doc p,.doc li{color:var(--ink2)}
+.doc p+p{margin-top:12px}
+.doc ul{list-style:disc;padding-left:1.1em;display:grid;gap:6px;margin:10px 0}
+.doc .box{margin-top:20px;padding:18px 20px;border-radius:8px;background:var(--fog);font-size:14px}
+.doc .upd{font:500 12px var(--f-m);letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin-bottom:12px}
+@media (max-width:900px){.doc aside{grid-column:1/-1;position:static;display:flex;flex-wrap:wrap;gap:6px}.doc aside a{background:var(--fog)}.doc article{grid-column:1/-1}}
+
+.ft{background:#5E170D;color:rgba(245,242,236,.6);font-size:13px}
+.ft .wrap{display:grid;grid-template-columns:1fr auto;gap:12px;padding-top:22px;padding-bottom:22px}
+.ft .by a{color:var(--paper)}
+@media (max-width:640px){.ft .wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+
+.wab{position:fixed;right:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:45;width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(22,24,29,.45);transition:transform .3s var(--eo)}
+.wab svg{width:28px;height:28px}
+@media (hover:hover){.wab:hover{transform:scale(1.06)}}
+</style>
+</head>
+<body>
+
+<header class="hd"><div class="wrap">
+  <a href="index.html" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
+  <a class="btn" href="index.html">Volver al inicio</a>
+</div></header>
+
+<main>
+  <div class="wrap top">
+    <h1>Legales<span class="dot"></span></h1>
+    <p>Quién está detrás de este sitio, cómo se puede usar y qué hacemos con los datos que nos dejás en el formulario.</p>
+  </div>
+
+  <div class="wrap doc">
+    <aside aria-label="Secciones"><a href="#aviso">Aviso legal</a><a href="#terminos">Términos de uso</a><a href="#privacidad">Privacidad</a><a href="#cookies">Cookies</a></aside>
+    <article>
+      <p class="upd">Última actualización: septiembre de 2026</p>
+
+      <section id="aviso">
+        <h2>Aviso legal</h2>
+        <p>Este sitio pertenece a <span class="tbd">Razón social</span>, que opera bajo el nombre comercial Genesis Recursos Humanos.</p>
+        <ul>
+          <li>CUIT: <span class="tbd">30-00000000-0</span></li>
+          <li>Domicilio: <span class="tbd">Calle 000, Lomas de Zamora</span>, Provincia de Buenos Aires, Argentina</li>
+          <li>Mail: <a id="ml" href="#"></a></li>
+        </ul>
+      </section>
+
+      <section id="terminos">
+        <h2>Términos de uso</h2>
+        <p>Al navegar este sitio aceptás estos términos. Si no estás de acuerdo, te pedimos que no lo uses.</p>
+        <h3>Contenido informativo</h3>
+        <p>Lo que publicamos sobre convenios, cargas sociales, seguridad e higiene y normativa laboral es información general. No reemplaza el asesoramiento sobre el caso concreto de tu empresa, que damos solo dentro de una propuesta aceptada.</p>
+        <h3>Propiedad intelectual</h3>
+        <p>Los textos, la marca Genesis, el isotipo «Gn» y el diseño del sitio son de su titular. Los logos de otras empresas se muestran solo para identificar organizaciones donde nuestro equipo trabajó y pertenecen a sus dueños.</p>
+        <h3>Enlaces a terceros</h3>
+        <p>Los enlaces a WhatsApp, LinkedIn, Instagram u otros sitios se rigen por las condiciones de cada plataforma. No respondemos por su contenido ni por su disponibilidad.</p>
+        <h3>Ley aplicable</h3>
+        <p>Estos términos se rigen por las leyes de la República Argentina. Ante cualquier controversia son competentes los tribunales ordinarios de la Ciudad Autónoma de Buenos Aires.</p>
+      </section>
+
+      <section id="privacidad">
+        <h2>Política de privacidad</h2>
+        <p>Tratamos tus datos personales de acuerdo con la Ley 25.326 de Protección de los Datos Personales y su normativa complementaria.</p>
+        <h3>Qué datos recolectamos</h3>
+        <ul>
+          <li>Los que completás en el formulario de contacto: nombre, empresa, mail, cantidad de personas, servicio de interés y tu mensaje.</li>
+          <li>Si nos escribís por WhatsApp o por mail, los datos de esa conversación.</li>
+          <li>Si te postulás, los datos y el enlace a tu CV que nos compartas.</li>
+        </ul>
+        <h3>Para qué los usamos</h3>
+        <p>Solo para responder tu consulta, preparar una propuesta y, si trabajamos juntos, prestar el servicio. No los vendemos ni los cedemos a terceros, salvo obligación legal.</p>
+        <h3>Dónde se guardan</h3>
+        <p>En la base de datos del sitio y en nuestra casilla de correo, con acceso restringido al equipo de Genesis. Los conservamos mientras dure la relación o hasta que pidas borrarlos.</p>
+        <h3>Tus derechos</h3>
+        <p>Podés pedir acceso, rectificación, actualización o supresión de tus datos escribiendo a <a id="ml2" href="#"></a>. El derecho de acceso puede ejercerse en forma gratuita a intervalos no inferiores a seis meses, salvo interés legítimo acreditado (art. 14, inc. 3, Ley 25.326).</p>
+        <p class="box">La AGENCIA DE ACCESO A LA INFORMACIÓN PÚBLICA, en su carácter de Órgano de Control de la Ley N° 25.326, tiene la atribución de atender las denuncias y reclamos que interpongan quienes resulten afectados en sus derechos por incumplimiento de las normas vigentes en materia de protección de datos personales.</p>
+      </section>
+
+      <section id="cookies">
+        <h2>Cookies</h2>
+        <p>Usamos cookies para garantizar que el sitio funcione correctamente, mantenerlo seguro y entender de forma anónima cómo se usa, para mejorarlo.</p>
+        <p>Podés aceptarlas o rechazarlas desde el aviso que aparece al entrar, y también borrarlas o bloquearlas desde la configuración de tu navegador.</p>
+      </section>
+    </article>
+  </div>
+</main>
+
+<footer class="ft"><div class="wrap"><span>© 2026 Genesis Recursos Humanos</span><span class="by">Website by <a href="https://somoschaman.com.ar" target="_blank" rel="noopener">CHAMAN</a></span></div></footer>
+<a class="wab" id="wab" href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9a11.82 11.82 0 0 0-3.48-8.4z"/></svg></a>
+
+<script src="_assets/data.js"></script>
+<script src="_assets/cookies.js" defer></script>
+<script>
+// Solo lo necesario: ficha Gn, mails, WhatsApp e índice que marca la sección visible
+const D=DATA,$=s=>document.querySelector(s);
+document.querySelectorAll('.hd .btn').forEach(b=>{const t=b.textContent.trim(),i='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
+$('#lkGn').outerHTML=`<div class="gn" style="--t:1.55em" aria-hidden="true"><span class="n1">1</span><span class="d"></span><div class="g"><span>G</span><span>n</span></div></div>`;
+['#ml','#ml2'].forEach(s=>{$(s).href='mailto:'+D.mail;$(s).textContent=D.mail});
+$('#wab').href=D.wa;
+const links=[...document.querySelectorAll('.doc aside a')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('on',a.hash==='#'+e.target.id))}),{rootMargin:'-30% 0px -60% 0px'});
+document.querySelectorAll('.doc section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
