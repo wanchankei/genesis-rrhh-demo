@@ -524,7 +524,7 @@ document.querySelectorAll('.form select').forEach((sel,k)=>{
   paint();
 });
 
-$('#ftSl>div').innerHTML=S.map(x=>`<a href="#">${x.nm}</a>`).join('');
+$('#ftSl>div').innerHTML=S.map(x=>`<a href="#servicios">${x.nm}</a>`).join('');
 $('#ftS>button').addEventListener('click',e=>{if(!matchMedia('(max-width:900px)').matches)return;const o=$('#ftS').classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',o)});
 ['#wa3','#wa4'].forEach(s=>$(s).href=D.wa);
 ['#ml','#ml2','#ml3'].forEach(s=>{$(s).href='mailto:'+D.mail;$(s).textContent=D.mail});
