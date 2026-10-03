@@ -13,40 +13,79 @@
    Demo: el form no envía nada. */
 :root{--eo:cubic-bezier(.23,1,.32,1);--red-hero:#D4351F}
 .wrap{max-width:none}
-.hd{position:sticky;top:0;z-index:50;background:rgba(245,242,236,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+/* ===== NAV: vidrio sobre el hero, papel después ===== */
+.hd{position:fixed;top:0;left:0;right:0;z-index:50;color:var(--paper);transform:translateY(0);background:rgba(22,24,29,.1);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid rgba(245,242,236,.2);transition:transform .4s var(--eo),background-color .3s var(--eo),color .3s var(--eo),border-color .3s var(--eo)}
+.hd.hide{transform:translateY(-100%)}
+.hd.sc{background:rgba(245,242,236,.92);color:var(--ink);border-color:var(--line)}
 .hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
 .hd .lk{font-size:18px}
-.hd .btn{height:36px;padding:0 16px;background:rgba(22,24,29,.04);color:var(--ink);border-color:rgba(22,24,29,.16)}
+.hd nav{display:flex;gap:28px;font:500 13.5px var(--f-b)}
+.hd nav a{position:relative;padding:6px 0}
+.hd nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .3s var(--eo)}
+@media (hover:hover){.hd nav a:hover::after{transform:scaleX(1);transform-origin:left}}
+.hd:not(.sc) .lk .gn{background:var(--paper);color:var(--red-hero)}
+.hd:not(.sc) .lk .gn .d{background:var(--red-hero)}
+.hd.sc .btn.glass{background:rgba(22,24,29,.04);color:var(--ink);border-color:rgba(22,24,29,.16)}
+.mnav{display:none}
+/* Hamburguesa: botón cuadrado en vidrio, dos líneas desparejas que se cruzan en X */
+.burger{width:44px;height:44px;border-radius:8px;border:1px solid rgba(245,242,236,.3);background:rgba(245,242,236,.08);transition:background-color .3s var(--eo),border-color .3s var(--eo)}
+.burger::before,.burger::after{left:12px;right:12px;height:1.6px;border-radius:2px;transition:transform .35s var(--eo),left .35s var(--eo),right .35s var(--eo)}
+.burger::before{top:17px}.burger::after{top:25px;left:20px}
+.burger:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+@media (hover:hover){.burger:hover::after{left:12px}}
+.hd.sc .burger,.nav-open .burger{border-color:rgba(22,24,29,.16);background:rgba(22,24,29,.04)}
+.nav-open .burger::before{transform:translateY(4px) rotate(45deg)}
+.nav-open .burger::after{left:12px;transform:translateY(-4px) rotate(-45deg)}
+.nav-open .hd .lk .gn{background:var(--ink);color:var(--paper)}.nav-open .hd .lk .gn .d{background:var(--red)}
+@media (max-width:900px){
+  .hd nav,.hd .btn{display:none}.burger{display:block}
+  .mnav{display:flex;flex-direction:column;justify-content:space-between;gap:32px;position:fixed;inset:60px 0 0;background:var(--paper);color:var(--ink);padding:8px var(--gut) calc(24px + env(safe-area-inset-bottom));z-index:49;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .3s var(--eo),visibility .3s}
+  .mnav nav a{display:grid;grid-template-columns:36px 1fr 22px;align-items:center;font:700 clamp(28px,7.6vw,36px)/1.1 var(--f-d);letter-spacing:-.04em;padding:16px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(14px);transition:opacity .4s var(--eo),transform .5s var(--eo),color .2s;transition-delay:calc(var(--i)*45ms)}
+  .mnav nav .n{font:500 11px var(--f-m);letter-spacing:.06em;color:var(--red);align-self:start;padding-top:.7em}
+  .mnav nav svg{width:20px;height:20px;color:var(--mute)}
+  .mnav nav a:active{color:var(--red)}
+  .mnav .mf{display:grid;gap:18px;opacity:0;transition:opacity .4s var(--eo) .25s}
+  .mnav .mf .row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .mnav .mf p{font-size:14px;color:var(--graphite)}
+  .nav-open .mnav{opacity:1;visibility:visible}.nav-open .mnav nav a{opacity:1;transform:none}.nav-open .mnav .mf{opacity:1}
+  .nav-open .hd{background:var(--paper);color:var(--ink);border-color:var(--line)}
+  .nav-open .wab{opacity:0;pointer-events:none}
+}
 
-/* ===== HERO rojo con foto en multiply, texto a la izquierda y form a la derecha ===== */
-.hcv{position:relative;isolation:isolate;overflow:hidden;background:var(--red-hero);color:var(--paper);min-height:calc(100svh - 60px);display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center;padding-top:clamp(24px,4vh,48px);padding-bottom:clamp(24px,4vh,48px)}
-.hcv .bg{position:absolute;inset:0;z-index:-1;background:var(--red-hero)}
-.hcv .bg img{width:100%;height:100%;object-fit:cover;object-position:30% 30%;filter:grayscale(1) contrast(.82) brightness(1.4);mix-blend-mode:multiply;opacity:.75}
-.hcv .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(212,53,31,.92) 0%,rgba(212,53,31,.6) 40%,rgba(212,53,31,.25) 70%,rgba(212,53,31,.1) 100%)}
-.hcv .l{grid-column:1/6;display:grid;gap:28px;align-content:center}
-.hcv .mono{color:rgba(245,242,236,.8)}
-.hcv h1{font:700 clamp(48px,5.6vw,92px)/.9 var(--f-d);letter-spacing:-.055em;margin-top:12px;text-wrap:balance}
-.hcv h1 .dot{background:var(--paper)}
-.hcv .l>div>p{margin-top:18px;max-width:46ch;opacity:.92}
-.pasos-cv{display:grid;counter-reset:p}
-.pasos-cv li{counter-increment:p;display:grid;grid-template-columns:36px 1fr;gap:2px 10px;padding:12px 0;border-top:1px solid rgba(245,242,236,.25)}
-.pasos-cv li::before{content:counter(p,decimal-leading-zero);grid-row:span 2;font:500 12px/1.7 var(--f-m);letter-spacing:.06em;opacity:.7}
-.pasos-cv b{font:600 17px/1.3 var(--f-d);letter-spacing:-.015em}
-.pasos-cv span{font-size:14px;opacity:.85}
-.prox{padding:14px 18px;border-radius:10px;background:rgba(245,242,236,.1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 0 0 1px rgba(245,242,236,.22);font-size:14px}
-.prox .mono{display:block;color:var(--paper);margin-bottom:4px}
+/* ===== BANNER rojo con foto (como el hero de la home, más bajo) ===== */
+.ban{position:relative;isolation:isolate;overflow:hidden;background:var(--red-hero);color:var(--paper);padding-top:calc(60px + clamp(56px,10vh,112px));padding-bottom:clamp(40px,6vh,72px)}
+.ban .bg{position:absolute;inset:0;z-index:-1;background:var(--red-hero)}
+.ban .bg img{width:100%;height:100%;object-fit:cover;object-position:60% 30%;filter:grayscale(1) contrast(.82) brightness(1.4);mix-blend-mode:multiply;opacity:.75}
+.ban .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(212,53,31,.92) 0%,rgba(212,53,31,.55) 38%,rgba(212,53,31,.15) 65%,rgba(212,53,31,0) 85%)}
+.ban .mono{color:rgba(245,242,236,.8)}
+.ban h1{font:700 clamp(52px,7.4vw,120px)/.9 var(--f-d);letter-spacing:-.055em;margin-top:14px}
+.ban h1 .dot{background:var(--paper)}
+.ban p{margin-top:20px;max-width:52ch;opacity:.92}
+@media (max-width:900px){.ban .bg::after{background:linear-gradient(180deg,rgba(212,53,31,.88) 0%,rgba(212,53,31,.6) 55%,rgba(212,53,31,.8) 100%)}}
 
-.hcv .card{grid-column:7/13;color:var(--ink);background:var(--white);border-radius:14px;box-shadow:0 30px 60px -30px rgba(60,10,4,.55);padding:clamp(20px,2.4vw,32px)}
-.hcv .card .btn{width:100%}
-.hcv .card h2{font:700 26px/1.1 var(--f-d);letter-spacing:-.03em}
-.hcv .card h2+p{font-size:13px;color:var(--mute);margin-top:4px}
-.form{gap:12px}
-.form input,.form .sel-b{min-height:44px;padding-top:10px;padding-bottom:10px}
-.form textarea{min-height:68px}
+/* ===== FORM: sección propia sobre papel, entra entera en la pantalla ===== */
+.cv{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:center;min-height:100svh;padding-top:clamp(40px,4vw,56px);padding-bottom:clamp(40px,4vw,56px)}
+.cv .l{grid-column:1/6;display:grid;gap:36px}
+.cv .l h2{font:700 clamp(32px,3.4vw,48px)/1 var(--f-d);letter-spacing:-.04em}
+.pasos-cv{display:grid;counter-reset:p;margin-top:20px}
+.pasos-cv li{counter-increment:p;display:grid;grid-template-columns:44px 1fr;gap:4px 12px;padding:18px 0;border-top:1px solid var(--line)}
+.pasos-cv li:last-child{border-bottom:1px solid var(--line)}
+.pasos-cv li::before{content:counter(p,decimal-leading-zero);grid-row:span 2;font:500 12px/1.9 var(--f-m);letter-spacing:.06em;color:var(--red)}
+.pasos-cv b{font:600 18px/1.3 var(--f-d);letter-spacing:-.015em}
+.pasos-cv span{color:var(--graphite);font-size:15px}
+.prox{padding:18px 20px;border-radius:8px;background:var(--fog);font-size:14px;color:var(--ink2)}
+.prox .mono{display:block;color:var(--red);margin-bottom:6px}
+
+.cv .card{grid-column:7/13;background:var(--white);border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:clamp(24px,2.6vw,36px)}
+.cv .card .btn{width:100%;height:48px}
+.cv .card h2{font:700 28px/1.1 var(--f-d);letter-spacing:-.03em}
+.cv .card h2+p{font-size:13px;color:var(--mute);margin-top:6px}
+.form{gap:16px}
+.form textarea{min-height:92px}
 .form .opt{font-weight:400;color:var(--mute)}
 
 /* CV adjunto: se ve como un campo más; el input nativo queda encima, invisible, y acepta clic o arrastre */
-.drop{position:relative;display:flex;align-items:center;gap:10px;min-height:44px;padding:8px 12px;border:1.5px dashed var(--stone);border-radius:6px;background:var(--paper);cursor:pointer;transition:border-color .2s,background-color .2s}
+.drop{position:relative;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 12px;border:1.5px dashed var(--stone);border-radius:6px;background:var(--paper);cursor:pointer;transition:border-color .2s,background-color .2s}
 .drop input{position:absolute;inset:0;width:100%;min-height:0;opacity:0;cursor:pointer}
 .drop svg{width:20px;height:20px;flex:none;color:var(--ink)}
 .drop span{display:grid;min-width:0}
@@ -67,14 +106,10 @@
 .done p{color:var(--graphite);max-width:36ch;margin:0 auto 24px}
 .card.sent .form{display:none}.card.sent .done{display:block}
 
-@media (max-width:1000px){
-  .hcv{min-height:0;padding-top:48px;padding-bottom:24px}
-  /* en mobile el form va justo después del título; los pasos y el «Próximamente» quedan abajo */
-  .hcv{row-gap:28px}
-  .hcv .l{display:contents}
-  .hcv .l>*,.hcv .card{grid-column:1/-1}
-  .hcv .card{order:1}.hcv .pasos-cv{order:2}.hcv .prox{order:3}
-  .hcv .bg::after{background:linear-gradient(180deg,rgba(212,53,31,.9) 0%,rgba(212,53,31,.55) 45%,rgba(212,53,31,.85) 100%)}
+@media (max-width:900px){
+  .cv{min-height:0;row-gap:40px}
+  .cv .l,.cv .card{grid-column:1/-1}
+  .cv .card{order:-1}
 }
 
 /* Desplegables propios (copiados de la home) */
@@ -93,9 +128,10 @@
 
 /* ===== FOOTER: el mismo de la home (foto oscura, cierre en vidrio, columnas) ===== */
 .soc{display:flex;gap:8px}
-.soc a{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;border:1px solid rgba(245,242,236,.2);color:var(--paper);transition:background-color .2s,color .2s,border-color .2s}
+.soc a{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink);transition:background-color .2s,color .2s,border-color .2s}
 .soc svg{width:18px;height:18px}
-@media (hover:hover){.ft .cols .soc a:hover{background:var(--red);border-color:var(--red);color:var(--white);text-decoration:none}}
+.ft .soc a{border-color:rgba(245,242,236,.2);color:var(--paper)}
+@media (hover:hover){.soc a:hover,.ft .cols .soc a:hover{background:var(--red);border-color:var(--red);color:var(--white);text-decoration:none}}
 .ft{position:relative;color:var(--paper);background:#5E170D;overflow:hidden;isolation:isolate}
 .ft .fbg{position:absolute;inset:0;z-index:-1;background:#8E2415}
 .ft .fbg img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply;opacity:.55}
@@ -139,32 +175,43 @@
   .fsv.open .fl>div{padding-bottom:18px}
 }
 
-.wab{position:fixed;right:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:45;width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(22,24,29,.45);transition:transform .3s var(--eo)}
+.wab{position:fixed;right:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:45;width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(22,24,29,.45);opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:opacity .35s var(--eo),transform .35s var(--eo)}
+.wab.on{opacity:1;transform:none;pointer-events:auto}
 .wab svg{width:28px;height:28px}
-@media (hover:hover){.wab:hover{transform:scale(1.06)}}
+@media (hover:hover){.wab.on:hover{transform:scale(1.06)}}
 </style>
 </head>
 <body>
 
-<header class="hd"><div class="wrap">
+<header class="hd" id="hd"><div class="wrap">
   <a href="index.html" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
-  <a class="btn" href="index.html">Volver al inicio</a>
+  <nav aria-label="Principal"><a href="index.html#servicios">Servicios</a><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Trabajá con nosotros</a></nav>
+  <a class="btn sm glass" href="index.html#contacto">Hablemos</a>
+  <button class="burger" aria-label="Menú" aria-expanded="false"></button>
 </div></header>
+<div class="mnav" id="mnav"><nav aria-label="Principal mobile" id="mnavL"></nav>
+  <div class="mf"><div class="row"><a class="btn" href="index.html#contacto">Hablemos</a><div class="soc" data-soc></div></div><p>CABA y GBA · Lunes a viernes 9 a 18</p></div></div>
 
 <main>
-  <section class="hcv wrap">
+  <section class="ban">
     <div class="bg" aria-hidden="true"><img src="_assets/img/w-referente.jpg" alt="" width="900" height="601" fetchpriority="high"></div>
+    <div class="wrap">
+      <span class="mono">Para candidatos</span>
+      <h1>Trabajá con nosotros<span class="dot"></span></h1>
+      <p>Las empresas de CABA y GBA nos piden personas para sus equipos. Dejanos tu CV y te tenemos en cuenta en las búsquedas que encajen con tu perfil.</p>
+    </div>
+  </section>
+
+  <section class="wrap cv" id="cv">
     <div class="l">
       <div>
-        <span class="mono">Para candidatos</span>
-        <h1>Trabajá con nosotros<span class="dot"></span></h1>
-        <p>Las empresas de CABA y GBA nos piden personas para sus equipos. Dejanos tu CV y te tenemos en cuenta en las búsquedas que encajen con tu perfil.</p>
+        <h2>Cómo funciona</h2>
+        <ol class="pasos-cv">
+          <li><b>Dejás tu CV</b><span>Completás tus datos y adjuntás el archivo. Te lleva dos minutos.</span></li>
+          <li><b>Lo leemos</b><span>Una persona del equipo lo revisa y lo suma a nuestra base, ordenado por área y zona.</span></li>
+          <li><b>Te llamamos</b><span>Cuando una empresa abre una búsqueda que encaja con tu perfil, te contactamos para una entrevista.</span></li>
+        </ol>
       </div>
-      <ol class="pasos-cv" aria-label="Cómo funciona">
-        <li><b>Dejás tu CV</b><span>Completás tus datos y adjuntás el archivo. Te lleva dos minutos.</span></li>
-        <li><b>Lo leemos</b><span>Una persona del equipo lo revisa y lo suma a la base, por área y zona.</span></li>
-        <li><b>Te llamamos</b><span>Cuando una empresa abre una búsqueda que encaja con tu perfil.</span></li>
-      </ol>
       <p class="prox"><span class="mono">Próximamente</span>Vamos a publicar acá las búsquedas abiertas de nuestras empresas para que te postules directo a cada una.</p>
     </div>
 
@@ -218,7 +265,11 @@
 // Ficha Gn, redes, footer, desplegables, adjunto y validación. Demo: el envío solo muestra el mensaje de gracias.
 const D=DATA,S=D.servicios,$=s=>document.querySelector(s);
 const GN=t=>`<div class="gn" style="--t:${t}" aria-hidden="true"><span class="n1">1</span><span class="d"></span><div class="g"><span>G</span><span>n</span></div></div>`;
-document.querySelectorAll('.hd .btn,.ft .btn').forEach(b=>{const t=b.textContent.trim(),i='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
+const ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+// Menú mobile numerado, igual que la home
+const MN=[['index.html#servicios','Servicios'],['index.html#trayectoria','Trayectoria'],['index.html#como','Cómo trabajamos'],['index.html#faq','Preguntas'],['trabaja.html','Trabajá con nosotros']];
+$('#mnavL').innerHTML=MN.map(([h,t],i)=>`<a href="${h}" style="--i:${i}"><span class="n">0${i+1}</span>${t}${ARR}</a>`).join('');
+document.querySelectorAll('.hd .btn,.mnav .btn,.ft .btn').forEach(b=>{const t=b.textContent.trim(),i=ARR;b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
 $('#lkGn').outerHTML=GN('1.55em');
 $('#lkGn2').innerHTML=GN('1.55em')+'Genesis';
 
@@ -230,6 +281,14 @@ const SOC={
 };
 document.querySelectorAll('[data-soc]').forEach(el=>el.innerHTML=Object.entries(SOC).map(([k,[n,svg]])=>`<a href="${D[k]}" target="_blank" rel="noopener" aria-label="${n}">${svg}</a>`).join(''));
 $('#wab').href=D.wa;$('#wab').innerHTML=SOC.wa[1];
+
+// Nav: vidrio sobre el banner, papel después; se esconde al bajar y vuelve al subir (como la home)
+const ban=$('.ban'),hd=$('#hd'),wab=$('#wab');let lastY=scrollY;
+const onS=()=>{const y=scrollY;hd.classList.toggle('sc',y>ban.offsetHeight-60);wab.classList.toggle('on',y>ban.offsetHeight*.6&&y<document.documentElement.scrollHeight-innerHeight-140);
+  if(!document.body.classList.contains('nav-open'))hd.classList.toggle('hide',y>lastY&&y>160);lastY=y};
+addEventListener('scroll',onS,{passive:true});onS();
+const bg=$('.burger');bg.addEventListener('click',()=>{const o=document.body.classList.toggle('nav-open');bg.setAttribute('aria-expanded',o)});
+document.querySelectorAll('.mnav a').forEach(a=>a.addEventListener('click',()=>{document.body.classList.remove('nav-open');bg.setAttribute('aria-expanded','false')}));
 $('#wa4').href=D.wa;
 ['#ml2','#ml3'].forEach(s=>{$(s).href='mailto:'+D.mail;$(s).textContent=D.mail});
 $('#ftSl>div').innerHTML=S.map(x=>`<a href="index.html#servicios">${x.nm}</a>`).join('');
