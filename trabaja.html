@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Trabajá con nosotros · Genesis RRHH</title>
+<title>Buscás trabajo · Dejá tu CV · Genesis RRHH</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="_assets/base.css">
 <style>
-/* Trabajá con nosotros: hero rojo con foto (como la home) y el form arriba, sin scroll; footer completo de la home.
+/* Buscás trabajo (candidatos): hero rojo con foto (como la home) y el form arriba, sin scroll; footer completo de la home.
    Demo: el form no envía nada. */
 :root{--eo:cubic-bezier(.23,1,.32,1);--red-hero:#D4351F}
 .wrap{max-width:none}
@@ -185,7 +185,7 @@
 
 <header class="hd" id="hd"><div class="wrap">
   <a href="index.html" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
-  <nav aria-label="Principal"><a href="index.html#servicios">Servicios</a><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Trabajá con nosotros</a></nav>
+  <nav aria-label="Principal"><a href="index.html#servicios">Servicios</a><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Buscás trabajo</a></nav>
   <a class="btn sm glass" href="index.html#contacto">Hablemos</a>
   <button class="burger" aria-label="Menú" aria-expanded="false"></button>
 </div></header>
@@ -196,9 +196,9 @@
   <section class="ban">
     <div class="bg" aria-hidden="true"><img src="_assets/img/w-referente.jpg" alt="" width="900" height="601" fetchpriority="high"></div>
     <div class="wrap">
-      <span class="mono">Para candidatos</span>
-      <h1>Trabajá con nosotros<span class="dot"></span></h1>
-      <p>Las empresas de CABA y GBA nos piden personas para sus equipos. Dejanos tu CV y te tenemos en cuenta en las búsquedas que encajen con tu perfil.</p>
+      <span class="mono">Para quienes buscan trabajo</span>
+      <h1>Buscamos trabajo por vos<span class="dot"></span></h1>
+      <p>Conectamos a empresas de CABA y GBA con las personas que necesitan para sus equipos. Dejanos tu CV: cuando una empresa busque un perfil como el tuyo, te contactamos.</p>
     </div>
   </section>
 
@@ -251,7 +251,7 @@
     <div class="cols">
       <div class="b"><span class="lk" id="lkGn2"></span><p>Consultora de Recursos Humanos para empresas de CABA y GBA. Sueldos, cargas sociales, selección, capacitación y seguridad e higiene.</p><div class="soc" data-soc></div></div>
       <div class="c w fsv" id="ftS"><button class="lbl" type="button" aria-expanded="false" aria-controls="ftSl">Servicios<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></button><div class="fl" id="ftSl"><div></div></div></div>
-      <div class="c"><span class="lbl">Genesis</span><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Trabajá con nosotros</a><a href="legales.html">Legales</a></div>
+      <div class="c"><span class="lbl">Genesis</span><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Buscás trabajo</a><a href="legales.html">Legales</a></div>
       <div class="c w"><span class="lbl">Contacto</span><a href="index.html#contacto">Pedí una propuesta</a><a id="ml2" href="#"></a><span>CABA y GBA · Lunes a viernes 9 a 18</span></div>
     </div>
     <div class="bot"><span>© 2026 Genesis Recursos Humanos</span><span class="by">Website by <a href="https://somoschaman.com.ar" target="_blank" rel="noopener">CHAMAN</a></span></div>
@@ -267,7 +267,7 @@ const D=DATA,S=D.servicios,$=s=>document.querySelector(s);
 const GN=t=>`<div class="gn" style="--t:${t}" aria-hidden="true"><span class="n1">1</span><span class="d"></span><div class="g"><span>G</span><span>n</span></div></div>`;
 const ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
 // Menú mobile numerado, igual que la home
-const MN=[['index.html#servicios','Servicios'],['index.html#trayectoria','Trayectoria'],['index.html#como','Cómo trabajamos'],['index.html#faq','Preguntas'],['trabaja.html','Trabajá con nosotros']];
+const MN=[['index.html#servicios','Servicios'],['index.html#trayectoria','Trayectoria'],['index.html#como','Cómo trabajamos'],['index.html#faq','Preguntas'],['trabaja.html','Buscás trabajo']];
 $('#mnavL').innerHTML=MN.map(([h,t],i)=>`<a href="${h}" style="--i:${i}"><span class="n">0${i+1}</span>${t}${ARR}</a>`).join('');
 document.querySelectorAll('.hd .btn,.mnav .btn,.ft .btn').forEach(b=>{const t=b.textContent.trim(),i=ARR;b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
 $('#lkGn').outerHTML=GN('1.55em');
