@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trabajá con nosotros · Genesis RRHH</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="_assets/base.css">
+<style>
+/* Trabajá con nosotros: misma piel que legales (header y pie simplificados) + form de CV. Demo: no envía nada. */
+:root{--eo:cubic-bezier(.23,1,.32,1)}
+.wrap{max-width:none}
+.hd{position:sticky;top:0;z-index:50;background:rgba(245,242,236,.92);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+.hd .lk{font-size:18px}
+.hd .btn{height:36px;padding:0 16px;background:rgba(22,24,29,.04);color:var(--ink);border-color:rgba(22,24,29,.16)}
+
+.top{padding-top:clamp(64px,9vw,128px);padding-bottom:clamp(40px,5vw,64px);border-bottom:1px solid var(--line)}
+.top h1{font:700 clamp(56px,8vw,128px)/.9 var(--f-d);letter-spacing:-.055em}
+.top p{color:var(--graphite);margin-top:20px;max-width:56ch}
+
+.cv{display:grid;grid-template-columns:repeat(12,1fr);gap:24px;align-items:start;padding-top:clamp(40px,5vw,72px);padding-bottom:clamp(80px,10vw,144px)}
+.cv .l{grid-column:1/6;display:grid;gap:40px;position:sticky;top:96px}
+.cv h2{font:700 clamp(28px,3vw,40px)/1.05 var(--f-d);letter-spacing:-.035em}
+.pasos-cv{display:grid;counter-reset:p}
+.pasos-cv li{counter-increment:p;display:grid;grid-template-columns:44px 1fr;gap:4px 12px;padding:20px 0;border-top:1px solid var(--line)}
+.pasos-cv li:last-child{border-bottom:1px solid var(--line)}
+.pasos-cv li::before{content:counter(p,decimal-leading-zero);grid-row:span 2;font:500 12px/1.9 var(--f-m);letter-spacing:.06em;color:var(--red)}
+.pasos-cv b{font:600 18px/1.3 var(--f-d);letter-spacing:-.015em}
+.pasos-cv span{color:var(--graphite);font-size:15px}
+.prox{padding:18px 20px;border-radius:8px;background:var(--fog);font-size:14px;color:var(--ink2)}
+.prox .mono{display:block;color:var(--red);margin-bottom:6px}
+
+.cv .card{grid-column:7/13;background:var(--white);border-radius:12px;box-shadow:inset 0 0 0 1px var(--line);padding:clamp(20px,3vw,36px)}
+.cv .card .btn{width:100%}
+.cv .card h3{font:600 20px/1.2 var(--f-d);letter-spacing:-.02em;margin-bottom:4px}
+.form .opt{font-weight:400;color:var(--mute)}
+.form fieldset{border:0;padding:0;margin:0;display:grid;gap:14px}
+.form legend{font:500 11px var(--f-m);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:10px 0 2px}
+
+/* Adjuntar CV: el input nativo queda oculto dentro del label y sigue siendo accesible */
+.drop{position:relative;display:grid!important;justify-items:center;gap:6px!important;padding:28px 20px;border:1.5px dashed var(--stone);border-radius:8px;background:var(--paper);text-align:center;cursor:pointer;transition:border-color .2s,background-color .2s}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer;min-height:0}
+.drop svg{width:28px;height:28px;color:var(--ink)}
+.drop b{font:600 15px var(--f-d);color:var(--ink)}
+.drop small{font-size:13px;color:var(--mute)}
+.drop:focus-within,.drop.over{border-color:var(--ink);background:var(--white)}
+@media (hover:hover){.drop:hover{border-color:var(--ink)}}
+.drop.ok{border-style:solid;border-color:var(--ink);background:var(--white)}
+.drop.ok b::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle}
+.err{min-height:18px;font-size:13px;color:var(--red)}
+.chk{display:grid!important;grid-template-columns:20px 1fr;gap:10px!important;align-items:start;font:400 13px/1.5 var(--f-b)!important}
+.chk input{width:18px;min-height:18px;height:18px;margin-top:2px;accent-color:var(--ink)}
+.chk a{text-decoration:underline;text-underline-offset:2px}
+
+.done{display:none;text-align:center;padding:clamp(24px,5vw,56px) 8px}
+.done h3{font:700 clamp(32px,4vw,48px)/1 var(--f-d);letter-spacing:-.04em;margin-bottom:12px}
+.done p{color:var(--graphite);max-width:36ch;margin:0 auto 24px}
+.card.sent .form{display:none}.card.sent .done{display:block}
+
+@media (max-width:900px){.cv .l,.cv .card{grid-column:1/-1}.cv .l{position:static}}
+
+/* Desplegables propios (copiados de la home) */
+.sel{position:relative}
+.sel select{position:absolute;inset:0;opacity:0;pointer-events:none}
+.sel-b{width:100%;min-height:48px;padding:12px 14px;background:var(--white);border:1px solid var(--line);border-radius:6px;color:var(--ink);display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;cursor:pointer;font:400 16px var(--f-b);transition:border-color .2s}
+.sel-b svg{width:14px;height:14px;flex:none;transition:transform .25s var(--eo)}
+.sel.open .sel-b,.sel-b:focus-visible{outline:none;border-color:var(--ink)}
+.sel.open .sel-b svg{transform:rotate(180deg)}
+.sel-l{position:absolute;z-index:5;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;background:var(--white);border:1px solid var(--line);border-radius:6px;box-shadow:0 12px 32px -12px rgba(22,24,29,.25);display:grid;gap:2px;opacity:0;visibility:hidden;transform:translateY(-4px);transform-origin:top;transition:opacity .18s var(--eo),transform .18s var(--eo),visibility .18s}
+.sel.open .sel-l{opacity:1;visibility:visible;transform:none}
+.sel-l li{padding:10px 12px;border-radius:6px;color:var(--ink);font:400 15px var(--f-b);cursor:pointer;transition:background-color .15s,color .15s}
+.sel-l li.act{background:var(--fog)}
+.sel-l li[aria-selected=true]{background:var(--red);color:var(--white)}
+@media (prefers-reduced-motion:reduce){.sel-l,.sel-b svg,.drop{transition:none}}
+
+.ft{background:#5E170D;color:rgba(245,242,236,.6);font-size:13px}
+.ft .wrap{display:grid;grid-template-columns:1fr auto;gap:12px;padding-top:22px;padding-bottom:22px}
+.ft .by a{color:var(--paper)}
+@media (max-width:640px){.ft .wrap{grid-template-columns:1fr;justify-items:center;text-align:center}}
+
+.wab{position:fixed;right:clamp(16px,2vw,28px);bottom:clamp(16px,2vw,28px);z-index:45;width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(22,24,29,.45);transition:transform .3s var(--eo)}
+.wab svg{width:28px;height:28px}
+@media (hover:hover){.wab:hover{transform:scale(1.06)}}
+</style>
+</head>
+<body>
+
+<header class="hd"><div class="wrap">
+  <a href="index.html" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
+  <a class="btn" href="index.html">Volver al inicio</a>
+</div></header>
+
+<main>
+  <div class="wrap top">
+    <h1>Trabajá con nosotros<span class="dot"></span></h1>
+    <p>Las empresas de CABA y GBA nos piden personas para sus equipos. Dejanos tu CV y te tenemos en cuenta en las búsquedas que encajen con tu perfil.</p>
+  </div>
+
+  <div class="wrap cv">
+    <div class="l">
+      <div>
+        <h2>Cómo funciona</h2>
+        <ol class="pasos-cv" style="margin-top:20px">
+          <li><b>Dejás tu CV</b><span>Completás tus datos y adjuntás el archivo. Te lleva dos minutos.</span></li>
+          <li><b>Lo leemos</b><span>Una persona del equipo lo revisa y lo suma a nuestra base, ordenado por área y zona.</span></li>
+          <li><b>Te llamamos</b><span>Cuando una empresa abre una búsqueda que encaja con tu perfil, te contactamos para una entrevista.</span></li>
+        </ol>
+      </div>
+      <p class="prox"><span class="mono">Próximamente</span>Vamos a publicar acá las búsquedas abiertas de nuestras empresas para que te postules directo a cada una.</p>
+    </div>
+
+    <div class="card" id="card">
+      <form class="form" id="cvForm" aria-label="Dejá tu CV" novalidate>
+        <div><h3>Dejá tu CV</h3><p class="lbl" style="font-weight:500">Los campos sin «opcional» son obligatorios.</p></div>
+        <fieldset>
+          <legend>Tus datos</legend>
+          <div class="row"><label>Nombre y apellido<input name="nombre" autocomplete="name" required></label><label>Mail<input type="email" name="mail" autocomplete="email" required></label></div>
+          <div class="row"><label>Teléfono<input type="tel" name="tel" autocomplete="tel" inputmode="tel" required></label><label>Zona donde vivís<select name="zona"><option>CABA</option><option>GBA Sur</option><option>GBA Norte</option><option>GBA Oeste</option><option>Otra</option></select></label></div>
+        </fieldset>
+        <fieldset>
+          <legend>Tu perfil</legend>
+          <div class="row"><label>Área en la que buscás trabajo<select name="area"><option>Administración y finanzas</option><option>Comercial y ventas</option><option>Atención al cliente</option><option>Logística y depósito</option><option>Producción y operaciones</option><option>Recursos humanos</option><option>Sistemas y tecnología</option><option>Otra</option></select></label><label>Experiencia<select name="nivel"><option>Sin experiencia</option><option>Menos de 2 años</option><option>2 a 5 años</option><option>Más de 5 años</option><option>Jefatura o gerencia</option></select></label></div>
+          <label><span>LinkedIn <span class="opt">(opcional)</span></span><input type="url" name="linkedin" placeholder="https://linkedin.com/in/…"></label>
+          <label class="drop" id="drop">
+            <input type="file" name="cv" id="cvFile" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6"/><path d="m9.5 13.5 2.5-2.5 2.5 2.5"/></svg>
+            <b id="dropT">Adjuntá tu CV</b>
+            <small id="dropS">PDF o Word, hasta 5 MB. Arrastralo acá o hacé clic.</small>
+          </label>
+          <label><span>Contanos algo más <span class="opt">(opcional)</span></span><textarea name="msg" placeholder="Disponibilidad horaria, si buscás algo part-time, lo que quieras sumar."></textarea></label>
+        </fieldset>
+        <label class="chk"><input type="checkbox" name="ok" required><span>Acepto que Genesis guarde mis datos y mi CV para tenerme en cuenta en búsquedas laborales, según la <a href="legales.html#privacidad">política de privacidad</a>.</span></label>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn" type="submit">Enviar CV</button>
+      </form>
+      <div class="done" role="status" aria-live="polite">
+        <h3>Recibimos tu CV<span class="dot"></span></h3>
+        <p>Gracias. Lo vamos a revisar y te escribimos cuando aparezca una búsqueda que encaje con tu perfil.</p>
+        <a class="btn" href="index.html">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="ft"><div class="wrap"><span>© 2026 Genesis Recursos Humanos</span><span class="by">Website by <a href="https://somoschaman.com.ar" target="_blank" rel="noopener">CHAMAN</a></span></div></footer>
+<a class="wab" id="wab" href="#" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.91-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.18-1.41-.08-.13-.27-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9a11.82 11.82 0 0 0-3.48-8.4z"/></svg></a>
+
+<script src="_assets/data.js"></script>
+<script src="_assets/cookies.js" defer></script>
+<script>
+// Ficha Gn, WhatsApp, desplegables, adjunto y validación. Demo: el envío solo muestra el mensaje de gracias.
+const D=DATA,$=s=>document.querySelector(s);
+document.querySelectorAll('.hd .btn').forEach(b=>{const t=b.textContent.trim(),i='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
+$('#lkGn').outerHTML=`<div class="gn" style="--t:1.55em" aria-hidden="true"><span class="n1">1</span><span class="d"></span><div class="g"><span>G</span><span>n</span></div></div>`;
+$('#wab').href=D.wa;
+
+document.querySelectorAll('.form select').forEach((sel,k)=>{
+  const w=document.createElement('div');w.className='sel';sel.parentNode.insertBefore(w,sel);w.appendChild(sel);sel.tabIndex=-1;
+  const b=document.createElement('button');b.type='button';b.className='sel-b';b.setAttribute('aria-haspopup','listbox');b.setAttribute('aria-expanded','false');
+  const l=document.createElement('ul');l.className='sel-l';l.id='sel'+k;l.setAttribute('role','listbox');b.setAttribute('aria-controls',l.id);
+  l.innerHTML=[...sel.options].map((o,i)=>`<li role="option" id="sel${k}-${i}">${o.text}</li>`).join('');
+  w.append(b,l);const li=[...l.children];let act=0;
+  const paint=()=>{b.innerHTML=`<span>${sel.options[sel.selectedIndex].text}</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg>`;li.forEach((x,i)=>{x.setAttribute('aria-selected',i===sel.selectedIndex);x.classList.toggle('act',i===act)});b.setAttribute('aria-activedescendant',w.classList.contains('open')?li[act].id:'')};
+  const open=v=>{w.classList.toggle('open',v);b.setAttribute('aria-expanded',v);if(v)act=sel.selectedIndex;paint()};
+  const pick=i=>{sel.selectedIndex=i;sel.dispatchEvent(new Event('change',{bubbles:true}));open(false);b.focus()};
+  b.onclick=e=>{e.preventDefault();open(!w.classList.contains('open'))};
+  li.forEach((x,i)=>{x.onclick=e=>{e.preventDefault();pick(i)};x.onmouseenter=()=>{act=i;paint()}});
+  b.onkeydown=e=>{const o=w.classList.contains('open');
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!o)return open(true);act=(act+(e.key==='ArrowDown'?1:-1)+li.length)%li.length;paint()}
+    else if((e.key==='Enter'||e.key===' ')&&o){e.preventDefault();pick(act)}
+    else if(e.key==='Escape'&&o){e.preventDefault();open(false)}
+    else if(e.key==='Tab'&&o)open(false)};
+  document.addEventListener('click',e=>{if(!w.contains(e.target))open(false)});
+  sel.addEventListener('change',paint);
+  paint();
+});
+
+const f=$('#cvForm'),fi=$('#cvFile'),dr=$('#drop'),err=$('#err');
+const MAX=5*1024*1024,OK=/\.(pdf|docx?)$/i;
+const checkFile=()=>{const x=fi.files[0];
+  if(!x){dr.classList.remove('ok');$('#dropT').textContent='Adjuntá tu CV';$('#dropS').textContent='PDF o Word, hasta 5 MB. Arrastralo acá o hacé clic.';return ''}
+  if(!OK.test(x.name))return 'El CV tiene que ser PDF o Word.';
+  if(x.size>MAX)return 'El archivo pesa más de 5 MB.';
+  dr.classList.add('ok');$('#dropT').textContent=x.name;$('#dropS').textContent=(x.size/1024/1024).toFixed(1).replace('.',',')+' MB · Hacé clic para cambiarlo';return ''};
+fi.addEventListener('change',()=>{err.textContent=checkFile()});
+['dragenter','dragover'].forEach(t=>dr.addEventListener(t,()=>dr.classList.add('over')));
+['dragleave','drop'].forEach(t=>dr.addEventListener(t,()=>dr.classList.remove('over')));
+
+f.addEventListener('submit',e=>{e.preventDefault();
+  const bad=[...f.querySelectorAll('[required]')].find(x=>!x.checkValidity());
+  const fe=checkFile();
+  if(bad){err.textContent=bad===fi?'Falta adjuntar tu CV.':bad.type==='checkbox'?'Necesitamos que aceptes la política de privacidad.':'Revisá «'+bad.closest('label').firstChild.textContent.trim()+'».';if(bad!==fi)bad.focus();return}
+  if(fe){err.textContent=fe;return}
+  err.textContent='';$('#card').classList.add('sent');$('#card').scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+});
+</script>
+</body>
+</html>

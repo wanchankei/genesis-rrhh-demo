@@ -328,7 +328,7 @@
 
 <header class="hd" id="hd"><div class="wrap">
   <a href="#" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
-  <nav aria-label="Principal"><a href="#servicios">Servicios</a><a href="#trayectoria">Trayectoria</a><a href="#como">Cómo trabajamos</a><a href="#faq">Preguntas</a><a href="#contacto">Trabajá con nosotros</a></nav>
+  <nav aria-label="Principal"><a href="#servicios">Servicios</a><a href="#trayectoria">Trayectoria</a><a href="#como">Cómo trabajamos</a><a href="#faq">Preguntas</a><a href="trabaja.html">Trabajá con nosotros</a></nav>
   <a class="btn sm glass" id="navBtn" href="#contacto">Hablemos</a>
   <button class="burger" aria-label="Menú" aria-expanded="false"></button>
 </div></header>
@@ -422,7 +422,7 @@
     <div class="cols">
       <div class="b"><span class="lk" id="lkGn2"></span><p>Consultora de Recursos Humanos para empresas de CABA y GBA. Sueldos, cargas sociales, selección, capacitación y seguridad e higiene.</p><div class="soc" data-soc></div></div>
       <div class="c w fsv" id="ftS"><button class="lbl" type="button" aria-expanded="false" aria-controls="ftSl">Servicios<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3.5 6l4.5 4.5L12.5 6"/></svg></button><div class="fl" id="ftSl"><div></div></div></div>
-      <div class="c"><span class="lbl">Genesis</span><a href="#trayectoria">Trayectoria</a><a href="#como">Cómo trabajamos</a><a href="#faq">Preguntas</a><a href="#contacto">Trabajá con nosotros</a><a href="legales.html">Legales</a></div>
+      <div class="c"><span class="lbl">Genesis</span><a href="#trayectoria">Trayectoria</a><a href="#como">Cómo trabajamos</a><a href="#faq">Preguntas</a><a href="trabaja.html">Trabajá con nosotros</a><a href="legales.html">Legales</a></div>
       <div class="c w"><span class="lbl">Contacto</span><a href="#contacto">Pedí una propuesta</a><a id="ml2" href="#"></a><span>CABA y GBA · Lunes a viernes 9 a 18</span></div>
     </div>
     <div class="bot"><span>© 2026 Genesis Recursos Humanos</span><span class="by">Website by <a href="https://somoschaman.com.ar" target="_blank" rel="noopener">CHAMAN</a></span></div>
@@ -454,7 +454,7 @@ const SOC={
 document.querySelectorAll('[data-soc]').forEach(el=>el.innerHTML=Object.entries(SOC).map(([k,[n,svg]])=>`<a href="${D[k]}" target="_blank" rel="noopener" aria-label="${n}">${svg}</a>`).join(''));
 $('#wab').href=D.wa;$('#wab').innerHTML=SOC.wa[1];$('#liBtn').href=D.li;
 // Menú mobile numerado
-const MN=[['#servicios','Servicios'],['#trayectoria','Trayectoria'],['#como','Cómo trabajamos'],['#faq','Preguntas'],['#contacto','Trabajá con nosotros']];
+const MN=[['#servicios','Servicios'],['#trayectoria','Trayectoria'],['#como','Cómo trabajamos'],['#faq','Preguntas'],['trabaja.html','Trabajá con nosotros']];
 $('#mnavL').innerHTML=MN.map(([h,t],i)=>`<a href="${h}" style="--i:${i}"><span class="n">0${i+1}</span>${t}${ICON.arrow}</a>`).join('');
 // Trayectoria (del CV de Catriel)
 const TR=[
