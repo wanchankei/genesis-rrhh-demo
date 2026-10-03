@@ -55,7 +55,7 @@
 /* ===== BANNER rojo con foto (como el hero de la home, más bajo) ===== */
 .ban{position:relative;isolation:isolate;overflow:hidden;background:var(--red-hero);color:var(--paper);padding-top:calc(60px + clamp(56px,10vh,112px));padding-bottom:clamp(40px,6vh,72px)}
 .ban .bg{position:absolute;inset:0;z-index:-1;background:var(--red-hero)}
-.ban .bg img{width:100%;height:100%;object-fit:cover;object-position:60% 30%;filter:grayscale(1) contrast(.82) brightness(1.4);mix-blend-mode:multiply;opacity:.75}
+.ban .bg img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:grayscale(1) contrast(.82) brightness(1.4);mix-blend-mode:multiply;opacity:.75}
 .ban .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(212,53,31,.92) 0%,rgba(212,53,31,.55) 38%,rgba(212,53,31,.15) 65%,rgba(212,53,31,0) 85%)}
 .ban .mono{color:rgba(245,242,236,.8)}
 .ban h1{font:700 clamp(52px,7.4vw,120px)/.9 var(--f-d);letter-spacing:-.055em;margin-top:14px}
@@ -194,7 +194,7 @@
 
 <main>
   <section class="ban">
-    <div class="bg" aria-hidden="true"><img src="_assets/img/w-referente.jpg" alt="" width="900" height="601" fetchpriority="high"></div>
+    <div class="bg" aria-hidden="true"><img src="_assets/img/s-cargas.jpg" alt="" fetchpriority="high"></div>
     <div class="wrap">
       <span class="mono">Para quienes buscan trabajo</span>
       <h1>Buscamos trabajo por vos<span class="dot"></span></h1>
