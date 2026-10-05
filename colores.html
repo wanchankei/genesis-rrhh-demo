@@ -667,7 +667,7 @@ footer a{color:var(--tinta)}
   <h2 style="margin-top:88px">La marca completa en cada paleta</h2>
   <p class="lead">Cada variante cambia toda la marca, no solo el hero: la tinta, el papel, el acento (incluido el punto del logo), los fondos, la banda, el footer y los puntos de los servicios. Así se ve la página como quedaría de verdad.</p>
 
-  <div class="pick" style="border-style:solid;border-color:var(--tinta);margin-top:32px"><span class="lb">Elegí una paleta</span><span class="hint">Tocá un color: cambia toda la marca de abajo y también todos los gráficos del informe (mapa de color, tabla, mapa de posicionamiento y rueda). El selector flotante de abajo a la derecha hace lo mismo desde cualquier parte de la página.</span></div>
+  <div class="pick" style="border-style:solid;border-color:var(--tinta);margin-top:32px"><span class="lb">Elegí una paleta</span><span class="hint">Tocá un color: cambia toda la marca de abajo y también todos los gráficos del informe (mapa de color, tabla, mapa de posicionamiento y rueda).</span></div>
   <div class="tabs" id="tabs" role="group" aria-label="Paletas" style="margin-top:0"></div>
   <div class="sim">
     <div>
@@ -852,7 +852,6 @@ function applyAll(v){const RS=document.documentElement.style;RS.setProperty('--g
  drawWheel(v.id);const fn=document.getElementById('fabName');if(fn)fn.textContent=v.name;try{localStorage.setItem('gnPal',v.id)}catch(e){}}
 const pickHTML=V.map(v=>`<button data-v="${v.id}" aria-pressed="false" title="${v.name}" aria-label="${v.name}"><i style="background:${v.sup}"></i>${v.name}</button>`).join('');
 document.querySelectorAll('[data-pick]').forEach(el=>el.innerHTML=`<span class="lb">Probá Genesis en otro color</span>${pickHTML}<span class="hint">Tocá un color: el gráfico se actualiza y Genesis se ubica donde quedaría.</span>`);
-document.body.insertAdjacentHTML('beforeend',`<div class="fab" role="group" aria-label="Paleta de Genesis"><div class="t">Paleta <span id="fabName"></span></div><div class="r">${pickHTML}</div></div>`);
 document.querySelectorAll('.pick [data-v],.fab [data-v]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
 let first='rojo';try{first=localStorage.getItem('gnPal')||'rojo'}catch(e){}
 show(V.some(x=>x.id==first)?first:'rojo');
