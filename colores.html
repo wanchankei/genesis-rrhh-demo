@@ -179,8 +179,11 @@ header{padding:96px 0 80px}
 .fab .t{font-size:12px;font-weight:600;display:flex;justify-content:space-between;gap:12px}
 .fab .t span{font-weight:400;color:var(--grafito)}
 .fab .r{display:flex;flex-wrap:wrap;gap:6px}
-.fab button{padding:5px 9px 5px 6px;font-size:12px}
-@media (max-width:560px){.fab button{font-size:0;padding:5px;gap:0}.fab button i{width:22px;height:22px}}
+.fab{right:16px;bottom:16px;padding:8px 10px;gap:6px}
+.fab .r{gap:4px}
+.fab button{font-size:0;padding:3px;gap:0;border-color:transparent;background:none}
+.fab button i{width:24px;height:24px}
+.fab button[aria-pressed=true]{background:none;border-color:var(--tinta)}
 @media print{.fab,.pick{display:none}}
 #gnMap{transition:transform .7s cubic-bezier(.23,1,.32,1)}
 footer{padding:64px 0 96px;border-top:1px solid var(--borde);font-size:13px;color:var(--grafito)}
@@ -243,7 +246,7 @@ footer a{color:var(--tinta)}
     <div class="big">Verde<br>bosque<span style="color:#4E9A7C">.</span></div>
     <div>
       <h3>Serio como el navy, pero sin compartir color con ningún competidor.</h3>
-      <p>La marca hoy es negro tinta, papel y rojo, y el rojo domina la web (hero, banda, footer y acentos). Ninguna web del rubro es roja, pero el tono es el mismo de Adecco y Bayton, y también es el acento de Servicemen y Estrategia. En la rueda de color de la competencia quedan tres zonas libres: verde bosque, ocre y ciruela. El verde bosque es la única que es seria y cálida a la vez. Si se cambia la paleta, se cambia completa: tinta, papel, acento, punto del logo, fondos y footer. La sección 05 muestra la marca entera en cada opción.</p>
+      <p>La marca hoy es negro tinta, papel y rojo, y el rojo domina la web (hero, banda, footer y acentos). Ninguna web del rubro es roja, pero el tono es el mismo de Adecco y Bayton, y también es el acento de Servicemen y Estrategia. En la rueda de color de la competencia quedan tres zonas libres: verde bosque, ocre y malva. El verde bosque es la única que es seria y cálida a la vez. Si se cambia la paleta, se cambia completa: tinta, papel, acento, punto del logo, fondos y footer. La sección 05 muestra la marca entera en cada opción.</p>
     </div>
   </div>
   <div class="keys">
@@ -279,7 +282,7 @@ footer a{color:var(--tinta)}
 </div>
   <div class="scroll">
   <table class="matrix">
-    <thead><tr><th>Marca</th><th>Azul / navy</th><th>Rojo</th><th>Verde / lima</th><th>Naranja</th><th>Otros tonos<br>(bosque, ocre, ciruela)</th><th>Negro + papel cálido</th><th>Tipografía</th></tr></thead>
+    <thead><tr><th>Marca</th><th>Azul / navy</th><th>Rojo</th><th>Verde / lima</th><th>Naranja</th><th>Otros tonos<br>(bosque, ocre, malva)</th><th>Negro + papel cálido</th><th>Tipografía</th></tr></thead>
     <tbody>
       <tr><td>Pullmen</td><td><span class="cell" style="background:#02457D"></span></td><td></td><td></td><td></td><td></td><td></td><td class="muted">Helvetica / Avenir (Wix)</td></tr>
       <tr><td>Adecco</td><td><span class="cell s" style="background:#1C304B"></span></td><td><span class="cell" style="background:#DA291C"></span></td><td></td><td></td><td></td><td></td><td class="muted">Roboto + Houschka</td></tr>
@@ -651,7 +654,7 @@ footer a{color:var(--tinta)}
       <div class="zone busy"><span class="dots"><i style="background:#02457D"></i><i style="background:#2175D9"></i><i style="background:#039EE3"></i></span><b>Azules y navy · saturado</b><p>Siete de diez marcas. Es el «color serio» del rubro: por eso todos se ven iguales.</p></div>
       <div class="zone free"><span class="dots"><i style="background:#2F5D4E"></i></span><b>Verde bosque · libre</b><p>Entre el verde brillante y el turquesa. Nadie lo usa como color principal.</p></div>
       <div class="zone free"><span class="dots"><i style="background:#B8842C"></i></span><b>Ocre · libre</b><p>Entre el naranja de Gestión y el lima de CONA, pero más oscuro y menos saturado que ambos.</p></div>
-      <div class="zone free"><span class="dots"><i style="background:#6A2C4F"></i></span><b>Ciruela · libre</b><p>Del lado frío del rojo. Ninguna marca del rubro entra en violetas ni bordós.</p></div>
+      <div class="zone free"><span class="dots"><i style="background:#7A4F7A"></i></span><b>Violetas y malvas · libre</b><p>Del lado frío del rojo. Ninguna marca del rubro entra en violetas ni malvas.</p></div>
     </div>
   </div>
 
@@ -678,11 +681,21 @@ footer a{color:var(--tinta)}
   <p class="muted" style="font-size:14px;margin-top:6px">Tocá una para verla en grande.</p>
   <div class="thumbs" id="thumbs"></div>
 
-  <div class="options" style="margin-top:64px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-    <div class="opt win"><span class="badge mono">Si cambiamos</span><span class="mono muted">Opción A</span><h4>Verde bosque</h4><p>Es la única de las zonas libres que es seria y cálida a la vez. Se lee como un estudio contable o legal confiable, pero vivo. Está lejos de los verdes brillantes de CONA y Consultores y de todos los azules.</p><div class="v" style="color:var(--ok)">Serio · propio · cálido</div></div>
-    <div class="opt"><span class="mono muted">Opción B</span><h4>Ocre</h4><p>La más cálida y humana; transmite oficio y trayectoria. Hay que cuidarla: para que el texto blanco se lea, el ocre de los fondos va en su versión oscura.</p><div class="v" style="color:var(--warn)">Muy propia · más delicada de aplicar</div></div>
-    <div class="opt"><span class="mono muted">Opción C</span><h4>Seguir en rojo</h4><p>La web roja ya se distingue, pero el tono es el de Adecco y Bayton. Si el objetivo es no compartir color con ningún competidor, el rojo no cumple.</p><div class="v" style="color:var(--grafito)">Cero costo · color compartido</div></div>
-    <div class="opt"><span class="mono muted">Opción D · el puente</span><h4>Bordó</h4><p>Si se quiere seguir siendo «la marca roja» pero más seria y sin parecerse a Adecco ni a Bayton: el mismo rojo, oscurecido. En el mapa conserva su lugar propio y en la tabla sigue en la columna del rojo.</p><div class="v" style="color:var(--ok)">Cambio chico · serio · propio</div></div>
+  <div class="verdict" style="margin-top:72px">
+    <div class="big">Si fuera<br>nuestra marca:<br><span style="color:#4E9A7C">verde bosque.</span></div>
+    <div>
+      <h3>La recomendación del estudio</h3>
+      <p>1. Es el único color serio que no comparte familia con un grande. Los verdes del rubro son lima y verdes brillantes, casi siempre de acento; nadie usa un verde profundo como color principal.</p>
+      <p>2. Se lee confiable, como un estudio contable. Es lo que busca una PyME cuando delega sueldos, cargas sociales y seguridad e higiene.</p>
+      <p>3. Con el papel cálido y las fotos de personas trabajando sigue siendo humano, no frío.</p>
+      <p>4. La tabla periódica de servicios se ve más institucional sin perder carácter, y el punto del logo se distingue sobre la tinta verdosa.</p>
+    </div>
+  </div>
+  <div class="options" style="margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+    <div class="opt win"><span class="badge mono">Recomendado</span><span class="mono muted">1</span><h4>Verde bosque</h4><p>Serio, cálido y propio. Es la opción que mejor equilibra profesionalismo y diferencia.</p><div class="v" style="color:var(--ok)">Serio · propio · humano</div></div>
+    <div class="opt"><span class="mono muted">2 · si se quiere seguir en rojo</span><h4>Bordó</h4><p>Conserva la herencia roja con más seriedad. En el mapa sigue en la zona de Adecco y Bayton, así que diferencia menos que el verde.</p><div class="v" style="color:var(--warn)">Cambio chico · diferencia parcial</div></div>
+    <div class="opt"><span class="mono muted">3 · propias pero arriesgadas</span><h4>Ocre o malva</h4><p>Ningún competidor las usa. El ocre exige cuidar la legibilidad, y la malva puede leerse como estética o bienestar más que como consultora.</p><div class="v" style="color:var(--warn)">Muy propias · más delicadas</div></div>
+    <div class="opt"><span class="mono muted">Descartadas</span><h4>Rojo vivo y azul marino</h4><p>El rojo actual comparte color con Adecco y Bayton; el azul marino es el color de 7 de los 10 competidores. Ninguno de los dos resuelve la diferenciación.</p><div class="v" style="color:#B3372A">No diferencian</div></div>
   </div>
 </div></section>
 <script>
@@ -756,7 +769,7 @@ const V=[
   c:['Queda al lado del navy de Estrategia','Poco memorable'],
   v:['Serio, poco distinto','#956400']},
  {id:'malva',name:'Malva',tag:'Suave y humano',tinta:'',papel:'#F5F1F3',niebla:'#E7DFE4',acc:'#A97AA8',sup:'#7A4F7A',band:'#875A87',prof:'#2A1729',fg:'#F5F1F3',bandFg:'#F5F1F3',op:.55,
-  lee:'Suave, humano y cercano.',
+  lee:'Suave, humano y cercano: el único violeta del rubro.',
   p:['Familia de color totalmente libre en el rubro','Transmite cuidado y escucha'],
   c:['Puede leerse como estética o bienestar','Menos «empresa» que las demás'],
   v:['Muy propio, poco corporativo','#956400']},
@@ -767,7 +780,8 @@ const lab=h=>{let [r,g,b]=rgb(h);let x=(r*.4124+g*.3576+b*.1805)/.95047,y=r*.212
 const oklch=h=>{const [r,g,b]=rgb(h);let l=Math.cbrt(.4122214708*r+.5363325363*g+.0514459929*b),m=Math.cbrt(.2119034982*r+.6806995451*g+.1073969566*b),s=Math.cbrt(.0883024619*r+.2817188376*g+.6299787005*b);const A=1.9779984951*l-2.4285922050*m+.4505937099*s,B=.0259040371*l+.7827717662*m-.8086757660*s;return [Math.hypot(A,B),(Math.atan2(B,A)*180/Math.PI+360)%360]};
 const okhex=(L,C,h)=>{const a=C*Math.cos(h*Math.PI/180),b=C*Math.sin(h*Math.PI/180);const l=(L+.3963377774*a+.2158037573*b)**3,m=(L-.1055613458*a-.0638541728*b)**3,q=(L-.0894841775*a-1.2914855480*b)**3;const f=x=>{x=Math.max(0,Math.min(1,x));x=x<=.0031308?12.92*x:1.055*x**(1/2.4)-.055;return Math.round(x*255).toString(16).padStart(2,'0')};return '#'+f(4.0767416621*l-3.3077115913*m+.2309699292*q)+f(-1.2684380046*l+2.6097574011*m-.3413193965*q)+f(-.0041960863*l-.7034186147*m+1.7076147010*q)};
 V.forEach(v=>{if(v.id!='rojo')v.tinta=okhex(.215,.028,oklch(v.sup)[1])});
-const ORDER=['rojo','bordo','granate','terracota','cobre','ocre','oliva','bosque','petroleo','pizarra','indigo','navy','ciruela','malva'];
+const ORDER=['rojo','bordo','ocre','bosque','malva','navy'];
+for(let i=V.length-1;i>=0;i--)if(!ORDER.includes(V[i].id))V.splice(i,1);
 V.sort((a,b)=>ORDER.indexOf(a.id)-ORDER.indexOf(b.id));
 const dE=(a,b)=>{const A=lab(a),B=lab(b);return Math.hypot(A[0]-B[0],A[1]-B[1],A[2]-B[2])};
 const near=h=>COMP.map(([n,c])=>[n,c,dE(h,c)]).sort((a,b)=>a[2]-b[2])[0];
@@ -822,7 +836,7 @@ const POS={rojo:[175,245,'El mismo color que Adecco y Bayton: el color lo pone e
  indigo:[292,372,'Junto a los azules de Servicemen y Pullmen: corporativo.'],
  navy:[232,282,'Dentro del grupo azul con Pullmen, Servicemen y Consultores: Genesis se pierde.'],
  ciruela:[478,128,'Familia libre (violetas y bordós fríos): conserva su lugar propio, cálido y boutique.'],
- malva:[532,80,'Familia libre y la más suave: el extremo cercano y humano.']};
+ malva:[532,80,'Familia libre (violetas): el extremo cercano y humano, sin ningún competidor cerca.']};
 const mapPos=v=>{const [x,y]=POS[v.id];return [x-20,y-20]};
 const quad=(x,y)=>(y+20<220?'cálido / humano':'frío / corporativo')+', '+(x+20<330?'del lado masivo':'del lado boutique');
 const famOf=v=>{const h=oklch(v.sup)[1];return h<45||h>355?1:h<65?3:h>=100&&h<150?2:h>=195&&h<285?0:4};
@@ -835,10 +849,10 @@ function applyAll(v){const RS=document.documentElement.style;RS.setProperty('--g
  const moved=v.id!='rojo';const gh=document.getElementById('gnGhost');gh.style.opacity=moved?1:0;gh.setAttribute('transform',`translate(${hoyP[0]-497} ${hoyP[1]-78})`);const pl=document.getElementById('gnPath');pl.setAttribute('x1',hoyP[0]+20);pl.setAttribute('y1',hoyP[1]+20);pl.setAttribute('x2',x+20);pl.setAttribute('y2',y+20);pl.style.opacity=moved?1:0;
  document.getElementById('mapNote').innerHTML=`<b>Con ${v.name.toLowerCase()}:</b> ${POS[v.id][2]} Queda ${quad(x,y)}.`;
  document.getElementById('cmpColor').textContent=v.id=='rojo'?'Rojo #D4351F como superficie (hero, banda, footer) con foto en multiplicar; tinta y papel de base':`${v.name} ${v.sup} como superficie (hero, banda, footer) y ${v.acc} como acento y punto del logo; tinta ${v.tinta} y papel ${v.papel} de base`;
- drawWheel(v.id);try{localStorage.setItem('gnPal',v.id)}catch(e){}}
-const pickHTML=V.map(v=>`<button data-v="${v.id}" aria-pressed="false"><i style="background:${v.sup}"></i>${v.name}</button>`).join('');
+ drawWheel(v.id);const fn=document.getElementById('fabName');if(fn)fn.textContent=v.name;try{localStorage.setItem('gnPal',v.id)}catch(e){}}
+const pickHTML=V.map(v=>`<button data-v="${v.id}" aria-pressed="false" title="${v.name}" aria-label="${v.name}"><i style="background:${v.sup}"></i>${v.name}</button>`).join('');
 document.querySelectorAll('[data-pick]').forEach(el=>el.innerHTML=`<span class="lb">Probá Genesis en otro color</span>${pickHTML}<span class="hint">Tocá un color: el gráfico se actualiza y Genesis se ubica donde quedaría.</span>`);
-document.body.insertAdjacentHTML('beforeend',`<div class="fab" role="group" aria-label="Paleta de Genesis"><div class="t">Paleta de Genesis <span>tocá para cambiar</span></div><div class="r">${pickHTML}</div></div>`);
+document.body.insertAdjacentHTML('beforeend',`<div class="fab" role="group" aria-label="Paleta de Genesis"><div class="t">Paleta <span id="fabName"></span></div><div class="r">${pickHTML}</div></div>`);
 document.querySelectorAll('.pick [data-v],.fab [data-v]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
 let first='rojo';try{first=localStorage.getItem('gnPal')||'rojo'}catch(e){}
 show(V.some(x=>x.id==first)?first:'rojo');
