@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Genesis · Análisis de competencia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#16181D; --papel:#F5F2EC; --niebla:#E4DFD6; --borde:#E2DDD3; --grafito:#6B675F; --gris:#8A857C;
+  --rojo:#E5412D; --blanco:#FFFFFF; --ok:#2F7A45; --warn:#956400;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--papel);color:var(--tinta);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+h1,h2,h3,h4{font-family:"Inter Tight",Inter,sans-serif;letter-spacing:-.03em;line-height:1.05}
+h2{font-size:clamp(30px,4.4vw,44px);font-weight:700;margin-bottom:16px}
+h3{font-size:20px;font-weight:600;letter-spacing:-.015em}
+p{max-width:68ch}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.muted{color:var(--grafito)}
+section{padding:96px 0;border-top:1px solid var(--borde)}
+.over{display:flex;gap:12px;align-items:center;margin-bottom:20px;color:var(--grafito)}
+.over b{color:var(--tinta);font-weight:500}
+.lead{font-size:18px;color:#2E3037;margin-bottom:40px}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:5;background:rgba(245,242,236,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--borde)}
+nav .wrap{display:flex;gap:20px;align-items:center;height:56px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav a{color:var(--grafito);text-decoration:none;font-size:13px}
+nav a:hover{color:var(--tinta)}
+nav .brand{font-family:"Inter Tight";font-weight:700;color:var(--tinta);display:flex;gap:8px;align-items:center;margin-right:8px}
+
+/* FICHA GENESIS */
+.ficha{position:relative;background:var(--gT,var(--tinta));color:var(--gP,var(--papel));transition:background .4s;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:"Inter Tight";font-weight:700;letter-spacing:-.05em}
+.ficha .n{position:absolute;top:8%;left:9%;font-family:"IBM Plex Mono";font-weight:400;letter-spacing:0}
+.ficha .dot{position:absolute;top:9%;right:9%;width:11%;aspect-ratio:1;border-radius:50%;background:var(--gA,var(--rojo));transition:background .4s}
+.ficha.xs{width:22px;font-size:10px}.ficha.xs .n{display:none}
+
+/* HERO */
+header{padding:96px 0 80px}
+.hero{display:grid;grid-template-columns:1fr 260px;gap:48px;align-items:end}
+.hero h1{font-size:clamp(48px,8vw,96px);font-weight:700;letter-spacing:-.05em;line-height:.92}
+.hero .ficha{width:100%;font-size:110px}.hero .ficha .n{font-size:16px}
+.meta{display:flex;flex-wrap:wrap;gap:32px;margin-top:40px}
+.meta div{border-top:1px solid var(--tinta);padding-top:10px;min-width:150px}
+.meta strong{display:block;font-family:"Inter Tight";font-size:28px;letter-spacing:-.03em}
+
+/* VEREDICTO */
+.verdict{background:var(--tinta);color:var(--papel);padding:48px;display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:start}
+.verdict .big{font-family:"Inter Tight";font-weight:700;font-size:clamp(44px,7vw,80px);letter-spacing:-.05em;line-height:.9}
+.verdict .big span{color:var(--rojo)}
+.verdict p{color:#CFC7B8;margin-top:12px}
+.verdict h3{color:var(--papel);font-size:24px}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.key{background:var(--blanco);padding:24px;border:1px solid var(--borde)}
+.key .mono{color:var(--grafito)}
+.key h4{font-size:20px;margin:10px 0 8px}
+.key p{font-size:14px;color:var(--grafito)}
+
+/* MATRIZ COLOR */
+.matrix{width:100%;border-collapse:collapse;background:var(--blanco);border:1px solid var(--borde)}
+.matrix th,.matrix td{padding:12px 14px;border-bottom:1px solid var(--borde);text-align:center;font-size:14px}
+.matrix th{font-weight:500;font-size:12px;color:var(--grafito);background:var(--papel)}
+.matrix td:first-child,.matrix th:first-child{text-align:left}
+.matrix tr.gn td{background:#FBF9F5;font-weight:600}
+.cell{display:inline-block;width:18px;height:18px;border-radius:50%}
+.cell.s{width:10px;height:10px;opacity:.75}
+.matrix tfoot td{font-family:"Inter Tight";font-weight:700;font-size:18px;background:var(--papel)}
+.legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--grafito)}
+.legend span{display:inline-flex;gap:8px;align-items:center}
+.scroll{overflow-x:auto}
+
+.strip{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;margin:40px 0 8px}
+.strip div{aspect-ratio:1/2.4;display:flex;flex-direction:column}
+.strip i{flex:1}
+.strip small{font-size:10px;font-family:"IBM Plex Mono";color:var(--grafito);padding-top:6px;line-height:1.3;height:38px;overflow:hidden}
+
+/* MAPA */
+.mapwrap{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
+.map{background:var(--blanco);border:1px solid var(--borde);padding:16px}
+.map svg{width:100%;height:auto;display:block}
+.map text{font-family:Inter;font-size:12px;fill:var(--tinta)}
+.map .ax{font-family:"IBM Plex Mono";font-size:10px;fill:var(--grafito);letter-spacing:.06em}
+.note{background:var(--niebla);padding:20px;font-size:14px}
+.note p+p{margin-top:10px}
+
+/* CARDS COMPETIDORES */
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.card{background:var(--blanco);border:1px solid var(--borde);display:flex;flex-direction:column}
+.card .top{display:flex;justify-content:space-between;align-items:baseline;padding:22px 24px 0}
+.card .top h3{font-size:24px}
+.card .sw{display:flex;height:56px;margin:16px 24px 0}
+.card .sw i{display:block;height:100%;position:relative}
+.card .hex{display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 24px 0;font-family:"IBM Plex Mono";font-size:11px;color:var(--grafito)}
+.card .body{padding:16px 24px 24px;display:grid;gap:14px;font-size:14px}
+.card .quote{font-family:"Inter Tight";font-size:17px;font-weight:500;letter-spacing:-.01em;border-left:2px solid var(--borde);padding-left:12px;color:#2E3037}
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc h4{font-family:"IBM Plex Mono";font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.pc .pro h4{color:var(--ok)} .pc .con h4{color:#B3372A}
+.pc ul{list-style:none;display:grid;gap:6px}
+.pc li{padding-left:14px;position:relative;color:#2E3037;line-height:1.45}
+.pc li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:1px;background:currentColor}
+.lesson{background:var(--papel);padding:12px 14px;font-size:13.5px}
+.lesson b{font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11px;font-family:"IBM Plex Mono";border:1px solid var(--borde);padding:2px 8px;color:var(--grafito)}
+.tag.alert{border-color:#B3372A;color:#B3372A}
+
+/* PATRONES */
+.patterns{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pat{border-top:2px solid var(--tinta);padding-top:16px}
+.pat .num{font-family:"IBM Plex Mono";color:var(--grafito);font-size:12px}
+.pat h4{font-size:20px;margin:8px 0}
+.pat p{font-size:14px;color:var(--grafito)}
+.pat .gn{margin-top:12px;font-size:14px;color:var(--tinta);display:flex;gap:10px}
+.pat .gn .ficha{flex:none;margin-top:2px}
+
+/* COMPARATIVA */
+.cmp{width:100%;border-collapse:collapse;background:var(--blanco);border:1px solid var(--borde);font-size:14px}
+.cmp th,.cmp td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--borde);vertical-align:top}
+.cmp th{background:var(--papel);font-size:12px;font-weight:500;color:var(--grafito)}
+.cmp td:first-child{font-weight:600;width:22%}
+.cmp td:last-child{background:#FBF9F5}
+
+/* ROJOS */
+.reds{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:32px 0}
+.red{background:var(--blanco);border:1px solid var(--borde)}
+.red i{display:block;height:120px}
+.red div{padding:12px 14px;font-size:13px}
+.red b{display:block;font-family:"Inter Tight";font-size:16px}
+.red .mono{color:var(--grafito)}
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vs{background:var(--blanco);border:1px solid var(--borde);padding:24px}
+.vs .demo{height:180px;margin:14px 0;display:flex;align-items:center;justify-content:center;gap:16px}
+.vs p{font-size:14px;color:var(--grafito)}
+
+.options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.opt{background:var(--blanco);border:1px solid var(--borde);padding:24px;position:relative}
+.opt.win{border:2px solid var(--tinta)}
+.opt .badge{position:absolute;top:-1px;right:-1px;background:var(--tinta);color:var(--papel);padding:4px 10px}
+.opt h4{font-size:20px;margin:8px 0}
+.opt p{font-size:14px;color:var(--grafito)}
+.opt .v{margin-top:14px;font-family:"IBM Plex Mono";font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+
+.ratio{display:flex;height:72px;margin:24px 0 10px;border:1px solid var(--borde)}
+.ratio div{display:flex;align-items:flex-end;padding:8px 10px;font-family:"IBM Plex Mono";font-size:11px}
+.rules{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 32px;margin-top:24px}
+.rules li{list-style:none;padding:12px 0;border-bottom:1px solid var(--borde);font-size:14px;display:flex;gap:12px}
+.rules li span{font-family:"IBM Plex Mono";font-size:11px;padding-top:3px;min-width:44px}
+.rules .si span{color:var(--ok)} .rules .no span{color:#B3372A}
+
+/* ACCIONES */
+.actions{counter-reset:a;display:grid;gap:0}
+.act{display:grid;grid-template-columns:72px 1fr 1fr;gap:24px;padding:28px 0;border-bottom:1px solid var(--borde)}
+.act .k{font-family:"Inter Tight";font-weight:700;font-size:44px;letter-spacing:-.05em;line-height:1;color:var(--niebla);-webkit-text-stroke:1px var(--tinta)}
+.act h4{font-size:22px;margin-bottom:6px}
+.act p{font-size:14.5px;color:var(--grafito)}
+.act .ex{background:var(--blanco);border:1px solid var(--borde);padding:14px 16px;font-size:14px}
+.act .ex .mono{color:var(--grafito);display:block;margin-bottom:6px;font-size:10.5px}
+.prio{display:inline-block;margin-bottom:8px}
+.prio.a{color:var(--rojo)}
+
+.hm,.pm,#side,#gnRow,#wheel{overflow-anchor:none}
+.pick{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 20px;padding:12px 14px;background:var(--blanco);border:1px dashed #B9B2A5}
+.pick .lb{font-size:13px;font-weight:600;margin-right:4px;display:flex;align-items:center;gap:8px}
+.pick .lb:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gA,var(--rojo));box-shadow:0 0 0 4px color-mix(in srgb,var(--gA,#E5412D) 25%,transparent);animation:pk 1.8s ease-in-out infinite}
+@keyframes pk{50%{box-shadow:0 0 0 7px transparent}}
+@media (prefers-reduced-motion:reduce){.pick .lb:before{animation:none}}
+.pick button,.fab button{font:500 12.5px Inter;padding:6px 11px 6px 7px;border:1px solid var(--borde);background:var(--papel);color:var(--tinta);cursor:pointer;border-radius:999px;display:inline-flex;gap:7px;align-items:center}
+.pick button i,.fab button i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.pick button[aria-pressed=true],.fab button[aria-pressed=true]{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+.pick .hint{font-size:12px;color:var(--grafito);flex-basis:100%}
+.fab{position:fixed;z-index:20;right:16px;bottom:16px;background:var(--blanco);border:1px solid var(--borde);box-shadow:0 10px 30px rgba(22,24,29,.14);padding:10px 12px;display:grid;gap:8px;max-width:calc(100vw - 32px)}
+.fab .t{font-size:12px;font-weight:600;display:flex;justify-content:space-between;gap:12px}
+.fab .t span{font-weight:400;color:var(--grafito)}
+.fab .r{display:flex;flex-wrap:wrap;gap:6px}
+.fab button{padding:5px 9px 5px 6px;font-size:12px}
+@media (max-width:560px){.fab button{font-size:0;padding:5px;gap:0}.fab button i{width:22px;height:22px}}
+@media print{.fab,.pick{display:none}}
+#gnMap{transition:transform .7s cubic-bezier(.23,1,.32,1)}
+footer{padding:64px 0 96px;border-top:1px solid var(--borde);font-size:13px;color:var(--grafito)}
+footer ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:6px 32px;margin-top:16px}
+footer a{color:var(--tinta)}
+
+@media (max-width:900px){
+  .hero,.mapwrap,.verdict{grid-template-columns:1fr}
+  .hero .ficha{width:160px;font-size:68px}
+  .keys,.patterns,.options{grid-template-columns:1fr}
+  .grid2,.versus,.rules{grid-template-columns:1fr}
+  .reds{grid-template-columns:repeat(2,1fr)}
+  .act{grid-template-columns:1fr;gap:12px}
+  .strip{grid-template-columns:repeat(6,1fr)}
+  .pc{grid-template-columns:1fr}
+  footer ul{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .wrap{padding:0 16px}
+  section{padding:64px 0}
+  .verdict{padding:28px}
+  .strip{grid-template-columns:repeat(4,1fr)}
+}
+@media print{nav{display:none}section{padding:48px 0;break-inside:avoid-page}.card,.act{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="index.html" style="text-decoration:none"><span class="ficha xs"><span class="dot"></span>Gn</span>Genesis</a><a href="index.html" style="color:var(--tinta);font-weight:500">← Volver a la web</a>
+  <a href="#veredicto">Veredicto</a>
+  <a href="#color">Mapa de color</a>
+  <a href="#posicion">Posicionamiento</a>
+  <a href="#competidores">Competidores</a>
+  <a href="#patrones">Patrones</a>
+  <a href="#colores">Paletas</a>
+  <a href="#acciones">Cómo destacarnos</a>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="hero">
+    <div>
+      <div class="over mono"><b>Informe de marca</b> · Genesis Recursos Humanos · 05/10/2026</div>
+      <h1>Diez consultoras,<br>tres colores libres.</h1>
+      <p class="lead" style="margin-top:28px">Relevamos los sitios de 10 consultoras de RRHH y personal eventual que compiten en CABA y GBA: qué colores usan de verdad, qué dicen, qué hacen bien y dónde fallan. Al final, qué hacemos con Genesis.</p>
+    </div>
+    <div class="ficha"><span class="n">1</span><span class="dot"></span>Gn</div>
+  </div>
+  <div class="meta">
+    <div><span class="mono muted">Sitios relevados</span><strong>10</strong></div>
+    <div><span class="mono muted">Usan azul o navy</span><strong>7 de 10</strong></div>
+    <div><span class="mono muted">Usan rojo</span><strong>4 de 10</strong></div>
+    <div><span class="mono muted">Webs dominadas por rojo</span><strong>0</strong></div>
+  </div>
+</div></header>
+
+<!-- VEREDICTO -->
+<section id="veredicto"><div class="wrap">
+  <div class="verdict">
+    <div class="big">Verde<br>bosque<span style="color:#4E9A7C">.</span></div>
+    <div>
+      <h3>Serio como el navy, pero sin compartir color con ningún competidor.</h3>
+      <p>La marca hoy es negro tinta, papel y rojo, y el rojo domina la web (hero, banda, footer y acentos). Ninguna web del rubro es roja, pero el tono es el mismo de Adecco y Bayton, y también es el acento de Servicemen y Estrategia. En la rueda de color de la competencia quedan tres zonas libres: verde bosque, ocre y ciruela. El verde bosque es la única que es seria y cálida a la vez. Si se cambia la paleta, se cambia completa: tinta, papel, acento, punto del logo, fondos y footer. La sección 05 muestra la marca entera en cada opción.</p>
+    </div>
+  </div>
+  <div class="keys">
+    <div class="key"><span class="mono">Hallazgo 01</span><h4>El azul no diferencia a nadie</h4><p>Pullmen, Randstad, Servicemen, Conmor, Estrategia, Consultores de Empresas y Adecco (en su secundario) se apoyan en azul o navy. Pasarnos al azul sería desaparecer.</p></div>
+    <div class="key"><span class="mono">Hallazgo 02</span><h4>Todos le hablan al candidato</h4><p>Los títulos principales venden empleo («¡encontrá el trabajo que buscás!», «Donde las oportunidades te encuentran»). Casi nadie le habla primero a la PyME que necesita resolver RRHH.</p></div>
+    <div class="key"><span class="mono">Hallazgo 03</span><h4>Son grandes, y se nota</h4><p>Venden volumen, trayectoria y cobertura nacional. Ninguno ofrece cercanía: una persona a cargo, respuesta rápida, tamaño PyME. Ese es el espacio de Genesis.</p></div>
+  </div>
+</div></section>
+
+<!-- MAPA DE COLOR -->
+<section id="color"><div class="wrap">
+  <div class="over mono"><b>01</b> · Mapa de color del mercado</div>
+  <h2>Qué colores usan</h2>
+  <p class="lead">Colores medidos en cada sitio (fondos y textos con más superficie), no estimados a ojo. Cada columna es una marca; arriba el color dominante, abajo los secundarios.</p>
+  <div class="pick" data-pick></div>
+
+  <div class="strip">
+    <div><i style="background:#02457D"></i><i style="background:#F0EEEE"></i><small>Pullmen</small></div>
+    <div><i style="background:#DA291C"></i><i style="background:#1C304B"></i><small>Adecco</small></div>
+    <div><i style="background:#001F5B"></i><i style="background:#FA8D29;flex:.4"></i><i style="background:#E2231A;flex:.4"></i><i style="background:#2F9A41;flex:.4"></i><small>Servicemen</small></div>
+    <div><i style="background:#96BE0D"></i><i style="background:#000"></i><small>CONA</small></div>
+    <div><i style="background:#2175D9"></i><i style="background:#0F1941"></i><i style="background:#F7F5F0;flex:.6"></i><small>Randstad</small></div>
+    <div><i style="background:#039EE3"></i><i style="background:#111"></i><small>Conmor</small></div>
+    <div><i style="background:#BB2A25"></i><i style="background:#0B1020"></i><i style="background:#EF6B51;flex:.4"></i><small>Bayton</small></div>
+    <div><i style="background:#16344F"></i><i style="background:#1B8CFB"></i><i style="background:#FF2F5D;flex:.4"></i><small>Estrategia RRHH</small></div>
+    <div><i style="background:#BBCB47"></i><i style="background:#FF9933;flex:.6"></i><i style="background:#212121"></i><small>Grupo Gestión</small></div>
+    <div><i style="background:#041E42"></i><i style="background:#43B02A;flex:.5"></i><small>Consultores de Empresas</small></div>
+    <div><i style="background:#16181D"></i><i style="background:#F5F2EC"></i><i style="background:#E5412D;flex:.12"></i><small>Genesis manual</small></div>
+    <div id="gnStrip" style="outline:2px solid var(--tinta);outline-offset:3px"><i style="background:#D4351F;transition:background .4s"></i><i style="background:#E4DFD6;flex:.8;transition:background .4s"></i><i style="background:#5E170D;flex:.6;transition:background .4s"></i><small><b style="color:var(--tinta)">Genesis web</b></small></div>
+  </div>
+
+  <div style="margin-top:48px"><div class="pick" data-pick></div>
+</div>
+  <div class="scroll">
+  <table class="matrix">
+    <thead><tr><th>Marca</th><th>Azul / navy</th><th>Rojo</th><th>Verde / lima</th><th>Naranja</th><th>Otros tonos<br>(bosque, ocre, ciruela)</th><th>Negro + papel cálido</th><th>Tipografía</th></tr></thead>
+    <tbody>
+      <tr><td>Pullmen</td><td><span class="cell" style="background:#02457D"></span></td><td></td><td></td><td></td><td></td><td></td><td class="muted">Helvetica / Avenir (Wix)</td></tr>
+      <tr><td>Adecco</td><td><span class="cell s" style="background:#1C304B"></span></td><td><span class="cell" style="background:#DA291C"></span></td><td></td><td></td><td></td><td></td><td class="muted">Roboto + Houschka</td></tr>
+      <tr><td>Servicemen</td><td><span class="cell" style="background:#001F5B"></span></td><td><span class="cell s" style="background:#E2231A"></span></td><td><span class="cell s" style="background:#2F9A41"></span></td><td><span class="cell s" style="background:#FA8D29"></span></td><td></td><td></td><td class="muted">PF Square Sans</td></tr>
+      <tr><td>CONA</td><td></td><td></td><td><span class="cell" style="background:#96BE0D"></span></td><td></td><td></td><td></td><td class="muted">Barlow</td></tr>
+      <tr><td>Randstad</td><td><span class="cell" style="background:#2175D9"></span></td><td></td><td></td><td></td><td></td><td></td><td class="muted">Graphik</td></tr>
+      <tr><td>Conmor</td><td><span class="cell" style="background:#039EE3"></span></td><td></td><td></td><td></td><td></td><td></td><td class="muted">Raleway</td></tr>
+      <tr><td>Bayton</td><td><span class="cell s" style="background:#0B1020"></span></td><td><span class="cell" style="background:#BB2A25"></span></td><td></td><td><span class="cell s" style="background:#EF6B51"></span></td><td></td><td></td><td class="muted">Lato</td></tr>
+      <tr><td>Estrategia RRHH</td><td><span class="cell" style="background:#16344F"></span></td><td><span class="cell s" style="background:#FF2F5D"></span></td><td></td><td></td><td></td><td></td><td class="muted">Syne + DM Sans</td></tr>
+      <tr><td>Grupo Gestión</td><td></td><td></td><td><span class="cell" style="background:#BBCB47"></span></td><td><span class="cell s" style="background:#FF9933"></span></td><td></td><td></td><td class="muted">DM Sans</td></tr>
+      <tr><td>Consultores de Empresas</td><td><span class="cell" style="background:#041E42"></span></td><td></td><td><span class="cell s" style="background:#43B02A"></span></td><td></td><td></td><td></td><td class="muted">Poppins</td></tr>
+      <tr class="gn" id="gnRow"><td>Genesis (web actual)</td><td></td><td><span class="cell" style="background:#D4351F"></span></td><td></td><td></td><td></td><td><span class="cell s" style="background:#16181D"></span></td><td>Inter Tight + IBM Plex Mono</td></tr>
+    </tbody>
+    <tfoot><tr><td>Competidores</td><td>7</td><td>4</td><td>3</td><td>3</td><td style="color:var(--ok)">0</td><td style="color:var(--ok)">0</td><td></td></tr></tfoot>
+  </table>
+  </div>
+  <div class="legend"><span><span class="cell"></span>● grande = color principal</span><span><span class="cell s" style="background:var(--grafito)"></span>● chico = color secundario o de acento</span></div>
+</div></section>
+
+<!-- POSICIONAMIENTO -->
+<section id="posicion"><div class="wrap">
+  <div class="over mono"><b>02</b> · Mapa de posicionamiento</div>
+  <h2>Dónde está cada uno</h2>
+  <p class="lead">Ubicación según lo que comunican sus sitios: tamaño y foco del mensaje (eje horizontal) y tono visual y verbal (eje vertical).</p>
+  <div class="pick" data-pick></div>
+  <div class="mapwrap">
+    <div class="map">
+      <svg viewBox="0 0 640 460" role="img" aria-label="Mapa de posicionamiento de competidores">
+        <rect x="40" y="20" width="580" height="400" fill="#FBF9F5"/>
+        <rect x="330" y="20" width="290" height="200" fill="#F5F2EC"/>
+        <text x="604" y="42" text-anchor="end" class="ax">ESPACIO LIBRE</text>
+        <line x1="330" y1="20" x2="330" y2="420" stroke="#CFC7B8" stroke-dasharray="3 4"/>
+        <line x1="40" y1="220" x2="620" y2="220" stroke="#CFC7B8" stroke-dasharray="3 4"/>
+        <text x="40" y="444" class="ax">MASIVO · VOLUMEN · NACIONAL</text>
+        <text x="620" y="444" text-anchor="end" class="ax">BOUTIQUE · CERCANO · PyME</text>
+        <text x="22" y="420" class="ax" transform="rotate(-90 22 420)">CORPORATIVO · FRÍO</text>
+        <text x="22" y="20" class="ax" transform="rotate(-90 22 20)" text-anchor="end">CÁLIDO · HUMANO</text>
+        <!-- puntos: x = 40 + v*5.8 ; y = 420 - v*4 -->
+        <g>
+          <circle cx="127" cy="280" r="9" fill="#DA291C"/><text x="141" y="284">Adecco</text>
+          <circle cx="110" cy="200" r="9" fill="#2175D9"/><text x="124" y="204">Randstad</text>
+          <circle cx="168" cy="300" r="9" fill="#BB2A25"/><text x="182" y="304">Bayton</text>
+          <circle cx="185" cy="180" r="9" fill="#BBCB47"/><text x="199" y="184">Grupo Gestión</text>
+          <circle cx="243" cy="330" r="9" fill="#02457D"/><text x="257" y="334">Pullmen</text>
+          <circle cx="272" cy="300" r="9" fill="#001F5B"/><text x="286" y="304">Servicemen</text>
+          <circle cx="260" cy="250" r="9" fill="#041E42"/><text x="274" y="254">Consultores de Empresas</text>
+          <circle cx="330" cy="170" r="9" fill="#96BE0D"/><text x="344" y="174">CONA</text>
+          <circle cx="417" cy="330" r="9" fill="#039EE3"/><text x="431" y="334">Conmor</text>
+          <circle cx="388" cy="230" r="9" fill="#16344F"/><text x="402" y="234">Estrategia RRHH</text>
+        </g>
+        <g id="gnGhost" style="opacity:0;transition:opacity .4s">
+          <rect x="497" y="78" width="40" height="40" fill="none" stroke="#8A857C" stroke-dasharray="3 3"/>
+          <text x="517" y="134" text-anchor="middle" class="ax">HOY</text>
+        </g>
+        <line id="gnPath" x1="517" y1="98" x2="517" y2="98" stroke="#8A857C" stroke-dasharray="2 4" style="opacity:0;transition:opacity .4s"/>
+        <g id="gnMap" style="transform:translate(497px,78px)">
+          <circle id="gnHalo" cx="20" cy="20" r="34" fill="#D4351F" opacity=".22"/>
+          <rect id="gnRect" x="0" y="0" width="40" height="40" fill="#16181D"/>
+          <text id="gnTxt" x="20" y="26" text-anchor="middle" style="font-family:'Inter Tight';font-weight:700;font-size:16px;fill:#F5F2EC;letter-spacing:-.04em">Gn</text>
+          <circle id="gnDot" cx="33" cy="7" r="3.2" fill="#E5412D"/>
+          <text x="48" y="18" style="font-weight:600;paint-order:stroke;stroke:#FBF9F5;stroke-width:5px">Genesis</text>
+          <text id="gnName" x="48" y="33" class="ax" style="paint-order:stroke;stroke:#FBF9F5;stroke-width:5px">ROJO GÉNESIS</text>
+        </g>
+      </svg>
+    </div>
+    <div class="note">
+      <p><b>Cómo leerlo.</b> Abajo a la izquierda se amontonan las grandes: azul, mensajes institucionales, foco en volumen de personal eventual.</p>
+      <p>El cuadrante de arriba a la derecha (cercano y cálido) está vacío. CONA y Estrategia se acercan, pero le hablan al candidato, no a la empresa.</p>
+      <p><b>Cómo se mueve Genesis.</b> El color principal de la marca (el único fuera del negro y el blanco) es lo primero que se recuerda. Genesis se ubica junto a las marcas de su misma familia de color; si la familia está libre, conserva su lugar. Los tonos oscuros lo bajan hacia lo corporativo y los cálidos lo suben hacia lo humano.</p>
+      <p>Genesis entra ahí: PyME, una persona a cargo, tono humano y un sistema visual que nadie más tiene.</p>
+      <p id="mapNote" style="border-top:1px solid #CFC7B8;padding-top:10px"></p>
+      <p class="muted" style="font-size:12px">Es una ubicación cualitativa a partir de los sitios, no una encuesta de mercado.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- COMPETIDORES -->
+<section id="competidores"><div class="wrap">
+  <div class="over mono"><b>03</b> · Ficha por competidor</div>
+  <h2>Pros y contras, uno por uno</h2>
+  <p class="lead">Colores y tipografías relevados del sitio de cada uno el 05/10/2026. En cada ficha, qué tomar y qué evitar para Genesis.</p>
+
+  <div class="grid2">
+
+    <article class="card">
+      <div class="top"><h3>Adecco</h3><span class="mono muted">Multinacional</span></div>
+      <div class="sw"><i style="flex:3;background:#DA291C"></i><i style="flex:2;background:#1C304B"></i><i style="flex:2;background:#F8F8F9"></i><i style="flex:.6;background:#107B9E"></i></div>
+      <div class="hex"><span>#DA291C rojo</span><span>#1C304B navy</span><span>#107B9E links</span></div>
+      <div class="body">
+        <div class="quote">«Transformando el futuro del trabajo»</div>
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Marca global, reconocida al instante</li><li>Rojo icónico y consistente</li><li>Tipografía propia en títulos (Houschka)</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Fría y corporativa: la PyME se siente un número</li><li>Mensaje genérico, sin promesa concreta</li><li>Cuerpo en Roboto, sin carácter</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> es el dueño del rojo en RRHH. Si Genesis sigue en rojo, se tiene que diferenciar por el uso: superficies con foto y nunca un logo rojo sobre fondo blanco.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Randstad</h3><span class="mono muted">Multinacional</span></div>
+      <div class="sw"><i style="flex:3;background:#0F1941"></i><i style="flex:2;background:#2175D9"></i><i style="flex:2.5;background:#F7F5F0"></i></div>
+      <div class="hex"><span>#2175D9 azul</span><span>#0F1941 navy</span><span>#F7F5F0 crema</span></div>
+      <div class="body">
+        <div class="quote">«¡encontrá el trabajo que buscás!»</div>
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>El sistema de marca más prolijo del grupo</li><li>Titulares en minúscula: tono amable</li><li>Graphik, buena tipografía</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>La home le habla al candidato, no a la empresa</li><li>Azul: el mismo color que medio mercado</li><li>Escala masiva, nada personal</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> usa un fondo crema parecido a nuestro papel. Lo que nos separa es la tinta casi negra en lugar del navy: no ablandarla hacia el azul.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Bayton</h3><span class="mono muted">Nacional · 40+ oficinas</span></div>
+      <div class="sw"><i style="flex:3;background:#0B1020"></i><i style="flex:2;background:#BB2A25"></i><i style="flex:.8;background:#EF6B51"></i><i style="flex:2;background:#fff"></i></div>
+      <div class="hex"><span>#BB2A25 rojo</span><span>#0B1020 navy</span><span>#EF6B51 coral</span></div>
+      <div class="body">
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>La mayor cobertura territorial del país</li><li>Rojo + navy: fuerte y reconocible</li><li>Desde 1979, mucha trayectoria</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Sitio con Lato y Arial, sin identidad tipográfica</li><li>Mucho texto gris, poca jerarquía</li><li>Mensaje institucional, poco cercano</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> el competidor nacional más parecido en color (rojo + oscuro). Con el rojo actual, Genesis comparte color con la marca de mayor presencia del país.</div>
+        <div class="tags"><span class="tag alert">Comparte rojo con Genesis</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Pullmen</h3><span class="mono muted">Nacional · desde 1970</span></div>
+      <div class="sw"><i style="flex:3;background:#F0EEEE"></i><i style="flex:2.5;background:#02457D"></i><i style="flex:1;background:#C3C4C3"></i><i style="flex:.4;background:#198A95"></i></div>
+      <div class="hex"><span>#02457D navy</span><span>#F0EEEE gris</span><span>#198A95 turquesa</span></div>
+      <div class="body">
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Más de 50 años: solidez y confianza</li><li>Logo navy simple y legible</li><li>Red de sucursales en GBA</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Sitio en Wix, con aspecto desactualizado</li><li>Fotos borrosas y Helvetica Light poco legible</li><li>Dos marcas en el header (Pullmen y Pullmen Consulting)</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> la trayectoria se nota, pero la web no la acompaña. Una web rápida y prolija ya nos pone por encima en la primera impresión.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Grupo Servicemen</h3><span class="mono muted">Nacional · desde 1990</span></div>
+      <div class="sw"><i style="flex:3;background:#001F5B"></i><i style="flex:.8;background:#FA8D29"></i><i style="flex:.8;background:#E2231A"></i><i style="flex:.8;background:#2F9A41"></i><i style="flex:1;background:#ACABB1"></i></div>
+      <div class="hex"><span>#001F5B navy</span><span>#FA8D29</span><span>#E2231A</span><span>#2F9A41</span></div>
+      <div class="body">
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Marca de larga data</li><li>Navy dominante, coherente con el rubro</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Cinco colores sin jerarquía clara</li><li>Certificado SSL vencido al relevar: el navegador muestra «sitio no seguro»</li><li>Tipografía y layout de otra época</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> la confianza se pierde por detalles técnicos. HTTPS, velocidad y formularios que funcionen son parte de la marca.</div>
+        <div class="tags"><span class="tag alert">SSL vencido</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Grupo Gestión</h3><span class="mono muted">Nacional · desde 1997</span></div>
+      <div class="sw"><i style="flex:2.5;background:#BBCB47"></i><i style="flex:1.2;background:#FF9933"></i><i style="flex:2;background:#212121"></i><i style="flex:2;background:#fff"></i></div>
+      <div class="hex"><span>#BBCB47 lima</span><span>#FF9933 naranja</span><span>#212121</span></div>
+      <div class="body">
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Se diferencia del azul del rubro</li><li>Paleta con energía, DM Sans moderna</li><li>Gran escala: más de 20 sucursales</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Lima + naranja se lee más a promo o retail que a consultoría</li><li>Poca seriedad para temas legales y laborales</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> confirma que salir del azul funciona, pero el color tiene que transmitir criterio, no solo energía. La tinta lo logra.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>CONA</h3><span class="mono muted">Regional · desde 2009</span></div>
+      <div class="sw"><i style="flex:3;background:#96BE0D"></i><i style="flex:2;background:#000"></i><i style="flex:1;background:#546D00"></i><i style="flex:1.5;background:#fff"></i></div>
+      <div class="hex"><span>#96BE0D verde lima</span><span>#000000</span><span>#546D00</span></div>
+      <div class="body">
+        <div class="quote">«Donde las oportunidades te encuentran»</div>
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Verde propio, nadie más lo usa así</li><li>Tagline humana y memorable</li><li>Web nueva, Barlow, limpia</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Le habla al candidato</li><li>Verde + negro se lee tech o deportivo</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> buen ejemplo de tagline corta. Nosotros necesitamos una igual de clara, dirigida a la empresa.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Conmor</h3><span class="mono muted">PyME · CABA</span></div>
+      <div class="sw"><i style="flex:3;background:#039EE3"></i><i style="flex:2.5;background:#111"></i><i style="flex:1;background:#666"></i></div>
+      <div class="hex"><span>#039EE3 celeste</span><span>#111111</span><span>#666666</span></div>
+      <div class="body">
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Tamaño parecido al de Genesis</li><li>Muestra la habilitación y la asociación a FAETT</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Plantilla vieja, logo en JPG</li><li>Foto genérica de «IT service»</li><li>Celeste sin identidad propia</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> es el competidor directo de tamaño. Mostrar habilitaciones y asociaciones suma confianza; copiar eso y ganarle en todo lo demás.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Estrategia RRHH</h3><span class="mono muted">Nueva · desde 2022</span></div>
+      <div class="sw"><i style="flex:3;background:#16344F"></i><i style="flex:1.5;background:#1B8CFB"></i><i style="flex:.6;background:#FF2F5D"></i><i style="flex:2;background:#F5F7FB"></i></div>
+      <div class="hex"><span>#16344F navy</span><span>#1B8CFB azul</span><span>#FF2F5D rosa-rojo</span></div>
+      <div class="body">
+        <div class="quote">«El capital humano es la esencia y la mayor fortaleza en toda organización»</div>
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Web moderna, con Syne como tipografía display</li><li>Acento cálido sobre base fría</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Navy otra vez</li><li>Título genérico («capital humano»)</li><li>El dominio .com no resuelve; opera en .com.ar</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> la más parecida en edad y ambición. Su acento rosa-rojo es otra marca más en la zona del rojo.</div>
+        <div class="tags"><span class="tag alert">Acento cercano al de Genesis</span></div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="top"><h3>Consultores de Empresas</h3><span class="mono muted">Nacional · desde 1984</span></div>
+      <div class="sw"><i style="flex:3.5;background:#041E42"></i><i style="flex:1;background:#43B02A"></i><i style="flex:2;background:#F8F8F8"></i></div>
+      <div class="hex"><span>#041E42 navy</span><span>#43B02A verde</span><span>#F8F8F8</span></div>
+      <div class="body">
+        <div class="quote">«Desde 1984 brindando soluciones integrales en Recursos Humanos»</div>
+        <div class="pc">
+          <div class="pro"><h4>Pros</h4><ul><li>Título claro: dice qué hace y desde cuándo</li><li>Navy + verde, ordenado</li><li>Presencia en Argentina, Chile y Uruguay</li></ul></div>
+          <div class="con"><h4>Contras</h4><ul><li>Poppins: la tipografía de plantilla más vista</li><li>«Desde 1984» mira al pasado</li><li>Navy otra vez</li></ul></div>
+        </div>
+        <div class="lesson"><b>Para Genesis:</b> no podemos competir en años. Competimos en atención: a quién llamás, cuánto tarda la respuesta, qué te resolvemos.</div>
+      </div>
+    </article>
+
+  </div>
+</div></section>
+
+<!-- PATRONES -->
+<section id="patrones"><div class="wrap">
+  <div class="over mono"><b>04</b> · Lo que hacen todos</div>
+  <h2>Seis patrones del rubro, y cómo salir de cada uno</h2>
+  <p class="lead">Si un recurso lo usan 8 de 10 competidores, ya no comunica nada: es ruido de fondo.</p>
+  <div class="patterns">
+    <div class="pat"><span class="num">01</span><h4>Azul de «confianza»</h4><p>Navy o azul corporativo como color principal en 7 de 10.</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Rojo como superficie, con foto y tinta. Nadie del rubro lo hace.</span></div></div>
+    <div class="pat"><span class="num">02</span><h4>Hablarle al candidato</h4><p>La home vende empleo; la empresa tiene que buscar su sección.</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Home 100 % para empresas. Candidatos en «Buscás trabajo».</span></div></div>
+    <div class="pat"><span class="num">03</span><h4>Fotos de stock sonrientes</h4><p>Apretones de manos, oficinas genéricas, gente mirando a cámara.</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Tipografía como protagonista y pocas fotos, monocromas y cálidas.</span></div></div>
+    <div class="pat"><span class="num">04</span><h4>«Capital humano», «talento»</h4><p>Vocabulario abstracto que no dice qué se resuelve.</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Hablar de tareas concretas: liquidar sueldos, cubrir un puesto, cumplir higiene y seguridad.</span></div></div>
+    <div class="pat"><span class="num">05</span><h4>Tipografías de plantilla</h4><p>Roboto, Lato, Poppins, Raleway, Helvetica Light.</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Inter Tight compacta + IBM Plex Mono: estilo suizo editorial, sin parecido en el rubro.</span></div></div>
+    <div class="pat"><span class="num">06</span><h4>Trayectoria como argumento</h4><p>«Desde 1970», «desde 1984», «40 oficinas».</p><div class="gn"><span class="ficha xs"><span class="dot"></span>Gn</span><span>Argumento opuesto: una persona a cargo, respuesta en el día, tamaño PyME.</span></div></div>
+  </div>
+
+  <div class="scroll" style="margin-top:56px">
+  <table class="cmp">
+    <thead><tr><th>Dimensión</th><th>El mercado</th><th>Genesis</th></tr></thead>
+    <tbody>
+      <tr><td>Color</td><td>Navy y azul; el rojo solo en logos (Adecco, Bayton)</td><td id="cmpColor">Rojo #D4351F como superficie (hero, banda, footer) con foto en multiplicar; tinta y papel de base</td></tr>
+      <tr><td>Símbolo</td><td>Logotipos de texto, algunos con ícono abstracto</td><td>Ficha de tabla periódica «Gn» con número 1: un concepto, no solo un logo</td></tr>
+      <tr><td>Servicios</td><td>Listas o íconos genéricos</td><td>Fichas 2→7 (Ap, Sp, Ls, Cs, Cd, Sh): un sistema que se reconoce y se recuerda</td></tr>
+      <tr><td>Tipografía</td><td>Sans genéricas de plantilla</td><td>Grotesca suiza + mono para datos</td></tr>
+      <tr><td>Mensaje</td><td>Empleo y oportunidades (al candidato)</td><td>Resolver RRHH sin armar un área (a la empresa)</td></tr>
+      <tr><td>Escala</td><td>Nacional, multinacional</td><td>CABA y GBA, trato directo</td></tr>
+      <tr><td>Contacto</td><td>Formularios largos, teléfonos 0810</td><td>«Hablemos» por WhatsApp como acción principal</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+
+<!-- CAMBIAR COLORES -->
+<style>
+.today{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:8px 0 48px}
+.today div{background:var(--blanco);border:1px solid var(--borde);padding:18px}
+.today i{display:block;height:44px;margin-bottom:12px}
+.today b{display:block;font-family:"Inter Tight";font-size:22px;letter-spacing:-.03em}
+.today span{font-size:13px;color:var(--grafito)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:40px 0 16px}
+.tabs button{font:500 13px Inter;padding:9px 14px 9px 10px;border:1px solid var(--borde);background:var(--blanco);color:var(--tinta);cursor:pointer;display:flex;gap:8px;align-items:center;border-radius:999px}
+.tabs button i{width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.tabs button[aria-pressed=true]{background:var(--tinta);color:var(--papel);border-color:var(--tinta)}
+.sim{display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.side{background:var(--blanco);border:1px solid var(--borde);padding:22px;display:grid;gap:16px;font-size:14px}
+.side h3{font-size:24px}
+.side .pal{display:flex;gap:6px}
+.side .pal div{flex:1;font-family:"IBM Plex Mono";font-size:10px;color:var(--grafito)}
+.side .pal i{display:block;height:40px;margin-bottom:4px;border:1px solid rgba(0,0,0,.06)}
+.near{padding:10px 12px;font-size:13px;border-left:3px solid}
+.near b{font-family:"Inter Tight";font-size:16px}
+.pagewrap{display:flex;gap:14px;align-items:stretch}
+.page{width:58px;height:250px;display:flex;flex-direction:column;border:1px solid var(--borde);flex:none}
+.page i{display:block}
+.pagewrap p{font-size:12px;color:var(--grafito)}
+.side ul{list-style:none;display:grid;gap:6px}
+.side li{padding-left:16px;position:relative;line-height:1.45}
+.side li:before{position:absolute;left:0;font-family:"IBM Plex Mono";font-size:12px}
+.side .p li:before{content:"+";color:var(--ok)}
+.side .c li:before{content:"−";color:#B3372A}
+.verd{font-family:"IBM Plex Mono";font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;padding:8px 10px}
+
+/* Hero mock */
+.hm{--fg:#F5F2EC;container-type:inline-size;position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--hero);color:var(--fg);isolation:isolate;font-family:Inter}
+.hm .bg{position:absolute;inset:0;z-index:0}
+.hm .bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(.82) brightness(1.4);mix-blend-mode:var(--blend,multiply);opacity:var(--op,.75)}
+.hm .bg:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in srgb,var(--hero) 92%,transparent) 0%,color-mix(in srgb,var(--hero) 55%,transparent) 32%,color-mix(in srgb,var(--hero) 15%,transparent) 60%,transparent 80%)}
+.hm .hd{position:absolute;z-index:2;top:0;left:0;right:0;height:7.5cqi;display:flex;align-items:center;justify-content:space-between;padding:0 4cqi;border-bottom:1px solid color-mix(in srgb,var(--fg) 14%,transparent)}
+.hm .lg{display:flex;align-items:center;gap:1.1cqi;font:600 2cqi "Inter Tight";letter-spacing:-.02em}
+.hm .fi{position:relative;background:var(--fA);color:var(--fB);display:inline-flex;align-items:center;justify-content:center;font-family:"Inter Tight";font-weight:700;letter-spacing:-.05em;aspect-ratio:1}
+.hm .fi b{position:absolute;top:10%;right:10%;width:13%;aspect-ratio:1;border-radius:50%;background:var(--dot,#E5412D)}
+.hm .fi s{position:absolute;top:8%;left:10%;font:400 .26em "IBM Plex Mono";text-decoration:none;letter-spacing:0}
+.hm .lg .fi{width:3.6cqi;font-size:1.6cqi}
+.hm .mn{width:4.4cqi;height:4.4cqi;border-radius:.8cqi;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent)}
+.hm .tx{position:absolute;z-index:2;left:4cqi;top:15cqi;width:52%}
+.hm h4{font:500 3.2cqi/1.15 "Inter Tight";letter-spacing:-.025em}
+.hm p{font-size:1.45cqi;line-height:1.55;margin-top:1.6cqi;opacity:.92;max-width:none}
+.hm .ct{display:flex;gap:.9cqi;margin-top:2.6cqi}
+.hm .ct span{font:500 1.3cqi "Inter Tight";padding:1.1cqi 1.7cqi;border-radius:.7cqi;white-space:nowrap}
+.hm .b1{background:var(--btn);color:var(--btnFg)}
+.hm .b2{background:color-mix(in srgb,var(--fg) 10%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--fg) 30%,transparent)}
+.hm .wd{position:absolute;z-index:2;left:4cqi;right:4cqi;bottom:3cqi;display:flex;align-items:flex-end;gap:2cqi;font:700 13.5cqi/.8 "Inter Tight";letter-spacing:-.06em}
+.hm .wd .fi{width:13cqi;font-size:6cqi;flex:none}
+.hm.sm{aspect-ratio:16/10}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:48px}
+.th{background:var(--blanco);border:1px solid var(--borde);cursor:pointer;text-align:left;padding:0;font:inherit;color:inherit}
+.th div.m{padding:10px 12px;font-size:12.5px;display:grid;gap:2px}
+.th div.m b{font-family:"Inter Tight";font-size:15px}
+.th[aria-pressed=true]{outline:2px solid var(--tinta);outline-offset:2px}
+@media (max-width:900px){.sim{grid-template-columns:1fr}.today{grid-template-columns:repeat(2,1fr)}.thumbs{grid-template-columns:repeat(2,1fr)}}
+.wheelwrap{display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:40px;align-items:center;margin:32px 0 16px}
+.wheel{background:var(--blanco);border:1px solid var(--borde);padding:12px}
+.wheel svg{width:100%;height:auto;display:block}
+.wheel text{font-family:"IBM Plex Mono";font-size:10px;fill:var(--grafito);letter-spacing:.04em}
+.zones{display:grid;gap:10px}
+.zone{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;padding:14px 16px;background:var(--blanco);border:1px solid var(--borde);font-size:14px}
+.zone.free{border-left:3px solid var(--ok)}
+.zone.busy{border-left:3px solid #B3372A}
+.zone .dots{display:flex;gap:4px;padding-top:3px}
+.zone .dots i{width:14px;height:14px;border-radius:50%}
+.zone b{font-family:"Inter Tight";font-size:16px}
+.zone p{grid-column:2;font-size:13px;color:var(--grafito)}
+.serio{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 0}
+.serio div{background:var(--blanco);border:1px solid var(--borde);padding:16px;font-size:13.5px;color:var(--grafito)}
+.serio b{display:block;color:var(--tinta);font-family:"Inter Tight";font-size:16px;margin-bottom:4px}
+/* page mock */
+.pm{container-type:inline-size;margin-top:12px;border:1px solid var(--borde);overflow:hidden}
+.pm .sv{background:var(--papelV);color:var(--tintaV);padding:5cqi 4cqi}
+.pm .sv h5{font:700 3.4cqi/1 "Inter Tight";letter-spacing:-.04em;margin-bottom:3cqi;display:flex;gap:1.4cqi;align-items:center}
+.pm .sv h5 i{width:1.3cqi;height:1.3cqi;border-radius:50%;background:var(--acc)}
+.pm .row{display:grid;grid-template-columns:repeat(6,1fr);gap:1.2cqi}
+.pm .sf{background:#fff;border:1px solid color-mix(in srgb,var(--tintaV) 12%,transparent);aspect-ratio:1;position:relative;display:flex;align-items:center;justify-content:center;font:700 4.4cqi "Inter Tight";letter-spacing:-.05em}
+.pm .sf s{position:absolute;top:8%;left:10%;font:400 1.3cqi "IBM Plex Mono";text-decoration:none}
+.pm .sf b{position:absolute;top:10%;right:10%;width:1.2cqi;height:1.2cqi;border-radius:50%;background:var(--acc)}
+.pm .sf.on{background:var(--tintaV);color:var(--papelV)}
+.pm .sf u{position:absolute;bottom:8%;left:10%;right:10%;font:500 1.1cqi Inter;text-decoration:none;opacity:.7;letter-spacing:0}
+.pm .chips{display:flex;gap:1cqi;margin-top:2.4cqi;flex-wrap:wrap}
+.pm .chips span{font:500 1.3cqi Inter;padding:.7cqi 1.4cqi .7cqi 1.1cqi;border-radius:99px;background:var(--nieblaV);display:flex;align-items:center;gap:.8cqi}
+.pm .chips span:before{content:"";width:.9cqi;height:.9cqi;border-radius:50%;background:var(--acc)}
+.pm .bd{background:var(--band);color:var(--bandFg);padding:5cqi 4cqi;font:700 6cqi/.95 "Inter Tight";letter-spacing:-.05em;position:relative}
+.pm .bd i{display:inline-block;width:1.6cqi;height:1.6cqi;border-radius:50%;background:var(--tintaV);margin-left:.6cqi;vertical-align:.4cqi}
+.pm .ftm{background:var(--prof);color:var(--papelV);padding:4cqi;display:flex;justify-content:space-between;align-items:center;gap:2cqi}
+.pm .ftm .lg{display:flex;align-items:center;gap:1.2cqi;font:600 2.2cqi "Inter Tight"}
+.pm .ftm .fi{width:5cqi;font-size:2.2cqi;background:var(--papelV);color:var(--tintaV)}
+.pm .ftm .bt{font:500 1.5cqi "Inter Tight";padding:1.2cqi 2cqi;border-radius:.8cqi;background:var(--papelV);color:var(--tintaV)}
+.pm .fi{position:relative;display:inline-flex;align-items:center;justify-content:center;font-family:"Inter Tight";font-weight:700;letter-spacing:-.05em;aspect-ratio:1}
+.pm .fi b{position:absolute;top:10%;right:10%;width:13%;aspect-ratio:1;border-radius:50%;background:var(--acc)}
+.logos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.logos div{height:84px;display:flex;align-items:center;justify-content:center;gap:10px;font:700 22px "Inter Tight";letter-spacing:-.04em}
+.logos .fi{position:relative;width:40px;aspect-ratio:1;display:inline-flex;align-items:center;justify-content:center;font-size:17px;letter-spacing:-.05em}
+.logos .fi b{position:absolute;top:10%;right:10%;width:13%;aspect-ratio:1;border-radius:50%}
+.thpal{display:flex;height:8px}.thpal i{flex:1}
+@media (max-width:900px){.wheelwrap,.serio{grid-template-columns:1fr}}
+</style>
+<section id="colores"><div class="wrap">
+  <div class="over mono"><b>05</b> · Dónde encaja Genesis en color</div>
+  <h2>Qué colores quedan libres en el rubro</h2>
+  <p class="lead">Ubicamos en una rueda los 21 colores medidos en los sitios de la competencia (principales y de acento). El ángulo es el tono y la distancia al centro, la saturación. Las zonas sombreadas ya tienen dueño.</p>
+  <div class="pick" data-pick></div>
+
+  <div class="wheelwrap">
+    <div class="wheel"><svg id="wheel" viewBox="0 0 440 440" role="img" aria-label="Rueda de color con los colores de la competencia"></svg></div>
+    <div class="zones">
+      <div class="zone busy"><span class="dots"><i style="background:#DA291C"></i><i style="background:#BB2A25"></i><i style="background:#FF9933"></i></i></span><b>Rojos y naranjas · ocupado</b><p>Adecco, Bayton, Servicemen, Estrategia (acento) y Grupo Gestión. Acá está hoy el rojo de Genesis.</p></div>
+      <div class="zone busy"><span class="dots"><i style="background:#96BE0D"></i><i style="background:#43B02A"></i></span><b>Lima y verde brillante · ocupado</b><p>CONA, Grupo Gestión y Consultores de Empresas (acento).</p></div>
+      <div class="zone busy"><span class="dots"><i style="background:#02457D"></i><i style="background:#2175D9"></i><i style="background:#039EE3"></i></span><b>Azules y navy · saturado</b><p>Siete de diez marcas. Es el «color serio» del rubro: por eso todos se ven iguales.</p></div>
+      <div class="zone free"><span class="dots"><i style="background:#2F5D4E"></i></span><b>Verde bosque · libre</b><p>Entre el verde brillante y el turquesa. Nadie lo usa como color principal.</p></div>
+      <div class="zone free"><span class="dots"><i style="background:#B8842C"></i></span><b>Ocre · libre</b><p>Entre el naranja de Gestión y el lima de CONA, pero más oscuro y menos saturado que ambos.</p></div>
+      <div class="zone free"><span class="dots"><i style="background:#6A2C4F"></i></span><b>Ciruela · libre</b><p>Del lado frío del rojo. Ninguna marca del rubro entra en violetas ni bordós.</p></div>
+    </div>
+  </div>
+
+  <div class="serio">
+    <div><b>Cómo se ve serio un color</b>Oscuro y poco saturado. La competencia lo resuelve con navy; nosotros podemos hacer lo mismo en otro tono.</div>
+    <div><b>Cómo se ve cercano</b>Cálido, con papel en lugar de blanco puro y fotos de personas trabajando. Es el cuadrante libre del mapa de posicionamiento.</div>
+    <div><b>Dónde encaja Genesis</b>Serio en la base (tinta y papel) y propio en el acento. Las tres zonas libres sirven; el verde bosque es la que mejor combina seriedad y calidez.</div>
+  </div>
+
+  <h2 style="margin-top:88px">La marca completa en cada paleta</h2>
+  <p class="lead">Cada variante cambia toda la marca, no solo el hero: la tinta, el papel, el acento (incluido el punto del logo), los fondos, la banda, el footer y los puntos de los servicios. Así se ve la página como quedaría de verdad.</p>
+
+  <div class="pick" style="border-style:solid;border-color:var(--tinta);margin-top:32px"><span class="lb">Elegí una paleta</span><span class="hint">Tocá un color: cambia toda la marca de abajo y también todos los gráficos del informe (mapa de color, tabla, mapa de posicionamiento y rueda). El selector flotante de abajo a la derecha hace lo mismo desde cualquier parte de la página.</span></div>
+  <div class="tabs" id="tabs" role="group" aria-label="Paletas" style="margin-top:0"></div>
+  <div class="sim">
+    <div>
+      <div class="hm" id="big"></div>
+      <div class="pm" id="pm"></div>
+    </div>
+    <aside class="side" id="side"></aside>
+  </div>
+
+  <h3 style="margin-top:64px">Todas juntas</h3>
+  <p class="muted" style="font-size:14px;margin-top:6px">Tocá una para verla en grande.</p>
+  <div class="thumbs" id="thumbs"></div>
+
+  <div class="options" style="margin-top:64px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
+    <div class="opt win"><span class="badge mono">Si cambiamos</span><span class="mono muted">Opción A</span><h4>Verde bosque</h4><p>Es la única de las zonas libres que es seria y cálida a la vez. Se lee como un estudio contable o legal confiable, pero vivo. Está lejos de los verdes brillantes de CONA y Consultores y de todos los azules.</p><div class="v" style="color:var(--ok)">Serio · propio · cálido</div></div>
+    <div class="opt"><span class="mono muted">Opción B</span><h4>Ocre</h4><p>La más cálida y humana; transmite oficio y trayectoria. Hay que cuidarla: para que el texto blanco se lea, el ocre de los fondos va en su versión oscura.</p><div class="v" style="color:var(--warn)">Muy propia · más delicada de aplicar</div></div>
+    <div class="opt"><span class="mono muted">Opción C</span><h4>Seguir en rojo</h4><p>La web roja ya se distingue, pero el tono es el de Adecco y Bayton. Si el objetivo es no compartir color con ningún competidor, el rojo no cumple.</p><div class="v" style="color:var(--grafito)">Cero costo · color compartido</div></div>
+    <div class="opt"><span class="mono muted">Opción D · el puente</span><h4>Bordó</h4><p>Si se quiere seguir siendo «la marca roja» pero más seria y sin parecerse a Adecco ni a Bayton: el mismo rojo, oscurecido. En el mapa conserva su lugar propio y en la tabla sigue en la columna del rojo.</p><div class="v" style="color:var(--ok)">Cambio chico · serio · propio</div></div>
+  </div>
+</div></section>
+<script>
+(()=>{
+const IMG='https://wanchankei.github.io/genesis-rrhh-demo/_assets/img/hero-oficina.jpg';
+const COMP=[['Pullmen','#02457D'],['Pullmen (turquesa)','#198A95'],['Adecco','#DA291C'],['Adecco (navy)','#1C304B'],['Servicemen','#001F5B'],['Servicemen (naranja)','#FA8D29'],['Servicemen (rojo)','#E2231A'],['Servicemen (verde)','#2F9A41'],['CONA','#96BE0D'],['Randstad','#2175D9'],['Randstad (navy)','#0F1941'],['Conmor','#039EE3'],['Bayton','#BB2A25'],['Bayton (coral)','#EF6B51'],['Estrategia','#16344F'],['Estrategia (azul)','#1B8CFB'],['Estrategia (acento)','#FF2F5D'],['Grupo Gestión','#BBCB47'],['Grupo Gestión (naranja)','#FF9933'],['Consultores de Empresas','#041E42'],['Consultores (verde)','#43B02A']];
+const V=[
+ {id:'rojo',name:'Rojo génesis',tag:'Hoy',tinta:'#16181D',papel:'#F5F2EC',niebla:'#E4DFD6',acc:'#E5412D',sup:'#D4351F',band:'#E5412D',prof:'#5E170D',fg:'#F5F2EC',bandFg:'#F5F2EC',op:.75,
+  lee:'Energía, urgencia, una persona del otro lado.',
+  p:['Ningún sitio del rubro está dominado por el rojo','Es la identidad que ya tiene la web'],
+  c:['El tono es el de Adecco y Bayton (y el acento de Servicemen y Estrategia)','Fuera de la web, el logo puede confundirse con Adecco'],
+  v:['Color compartido con dos grandes','#956400']},
+ {id:'bordo',name:'Bordó',tag:'Rojo serio',tinta:'#1A1416',papel:'#F5F1EE',niebla:'#E6DDD9',acc:'#A8323F',sup:'#7A1F2B',band:'#8C2332',prof:'#2E0B11',fg:'#F5F1EE',bandFg:'#F5F1EE',op:.55,
+  lee:'El rojo en versión seria: conserva la herencia de Genesis y se separa de Adecco y Bayton.',
+  p:['Sigue siendo «el rojo de Genesis», sin rehacer la identidad','Más serio y corporativo que el rojo actual','Ningún competidor usa bordó'],
+  c:['Pierde la energía del rojo vivo','Puede leerse como bodega o estudio jurídico tradicional'],
+  v:['Puente: sigue rojo, pero propio','#2F7A45']},
+ {id:'terracota',name:'Terracota',tag:'Rojo tierra',tinta:'#1E1714',papel:'#F4EEE6',niebla:'#E5DACD',acc:'#C8673F',sup:'#A84B2A',band:'#B4532F',prof:'#47200F',fg:'#F4EEE6',bandFg:'#F4EEE6',op:.65,
+  lee:'Cálido y artesanal: el rojo llevado a la tierra.',
+  p:['Conserva la calidez del rojo','Se separa del rojo puro de Adecco'],
+  c:['Queda cerca del coral de Bayton','Puede verse rústico'],
+  v:['Cercano a Bayton','#956400']},
+ {id:'bosque',name:'Verde bosque',tag:'Zona libre',tinta:'#121A17',papel:'#F3F2EC',niebla:'#E0E2DA',acc:'#4E9A7C',sup:'#2F5D4E',band:'#3A6B5A',prof:'#10261F',fg:'#F3F2EC',bandFg:'#F3F2EC',op:.6,
+  lee:'Estabilidad, cuidado, crecimiento. Serio como un estudio contable, pero vivo.',
+  p:['Ningún competidor está en este tono','Es tan serio como el navy, sin parecerse al resto','Combina con fotos cálidas y con el papel'],
+  c:['Puede leerse como salud o finanzas si se usa sin fotos de personas','Hay que reemplazar todos los rojos de la web'],
+  v:['Recomendado si cambiamos','#2F7A45']},
+ {id:'petroleo',name:'Petróleo',tag:'Serio técnico',tinta:'#101A1C',papel:'#F1F3F1',niebla:'#DDE3E1',acc:'#3E8F96',sup:'#1F5F66',band:'#2A6E76',prof:'#0B2427',fg:'#F1F3F1',bandFg:'#F1F3F1',op:.5,
+  lee:'Serio y preciso, entre el azul corporativo y el verde.',
+  p:['Se acerca al «serio» del rubro sin ser navy','Transmite orden y precisión (sueldos, cargas, normas)'],
+  c:['Cerca del turquesa de Pullmen','Más frío: pierde calidez'],
+  v:['Profesional, algo frío','#956400']},
+ {id:'ocre',name:'Ocre',tag:'Zona libre',tinta:'#1A1712',papel:'#F5F0E6',niebla:'#E6DECF',acc:'#C8922F',sup:'#A0712A',band:'#B07D2B',prof:'#3A2A10',fg:'#F5F0E6',bandFg:'#F5F0E6',op:.65,
+  lee:'Oficio, calidez y trayectoria. Serio como un estudio de escribanía o arquitectura.',
+  p:['Muy cálido y humano, sin dueño en el rubro','Con tinta, se ve premium y serio'],
+  c:['Para que el texto blanco se lea, el ocre de fondo tiene que ser oscuro (#A0712A)','Mal calibrado, se puede ver como mostaza'],
+  v:['Segunda opción','#956400']},
+ {id:'ciruela',name:'Ciruela',tag:'Zona libre',tinta:'#1A1418',papel:'#F5F1F0',niebla:'#E8DFE1',acc:'#B0487F',sup:'#6A2C4F',band:'#8A3157',prof:'#2C0F21',fg:'#F5F1F0',bandFg:'#F5F1F0',op:.55,
+  lee:'Criterio, discreción y distinción.',
+  p:['El territorio más vacío de la rueda','Elegante, con aire de consultora boutique'],
+  c:['Puede sentirse de moda, estética o bodega','Para una PyME que busca resolver sueldos, quizás demasiado sofisticado'],
+  v:['Tercera opción','#956400']},
+ {id:'oliva',name:'Oliva',tag:'Sobrio natural',tinta:'#171912',papel:'#F3F2EA',niebla:'#E1E0D3',acc:'#8A9A4E',sup:'#5B6B3A',band:'#6B7B45',prof:'#22281A',fg:'#F3F2EA',bandFg:'#F3F2EA',op:.55,
+  lee:'Natural, tranquilo y cercano.',
+  p:['Ningún competidor en este tono','Cálido sin ser estridente'],
+  c:['Es de la familia del lima de CONA y Gestión, aunque mucho más apagado','Puede leerse como agro o sustentabilidad'],
+  v:['Propio, poco corporativo','#956400']},
+ {id:'indigo',name:'Índigo',tag:'Corporativo distinto',tinta:'#13121F',papel:'#F3F2F5',niebla:'#E0DFE8',acc:'#7069C4',sup:'#3F3A7A',band:'#4C4690',prof:'#17142E',fg:'#F3F2F5',bandFg:'#F3F2F5',op:.5,
+  lee:'Corporativo con personalidad: el azul del rubro corrido hacia el violeta.',
+  p:['Tan serio como el navy','El matiz violeta lo separa un poco del resto'],
+  c:['Cerca de los azules de Servicemen y Pullmen','Puede leerse como tecnología o banca'],
+  v:['Serio, poco distinto','#956400']},
+ {id:'navy',name:'Azul marino',tag:'La trampa',tinta:'#0F1A2B',papel:'#F3F5F8',niebla:'#E1E6EE',acc:'#2F7FD8',sup:'#1D4E89',band:'#2F6CB5',prof:'#0A1F3A',fg:'#F3F5F8',bandFg:'#F3F5F8',op:.55,
+  lee:'Institucional. Exactamente lo que dicen los otros siete.',
+  p:['Transmite seriedad de inmediato'],
+  c:['Es el color de 7 de los 10 competidores','Genesis desaparece entre Pullmen, Randstad y Consultores'],
+  v:['No recomendado','#B3372A']},
+ {id:'granate',name:'Granate',tag:'Rojo profundo',tinta:'',papel:'#F5F0F0',niebla:'#E7DCDE',acc:'#B8344F',sup:'#8B1E3F',band:'#9C2647',prof:'#2E0A16',fg:'#F5F0F0',bandFg:'#F5F0F0',op:.55,
+  lee:'Rojo profundo y elegante, con un matiz frío.',
+  p:['Conserva la fuerza del rojo','Más sobrio y distinguido que el rojo actual'],
+  c:['Sigue en la familia del rojo de Adecco y Bayton','Puede leerse como vino o lujo'],
+  v:['Rojo con más categoría','#956400']},
+ {id:'cobre',name:'Cobre',tag:'Cálido sólido',tinta:'',papel:'#F5EFE8',niebla:'#E7DCCF',acc:'#C27A48',sup:'#9A5B34',band:'#A8653B',prof:'#33190C',fg:'#F5EFE8',bandFg:'#F5EFE8',op:.6,
+  lee:'Cálido, sólido y con oficio.',
+  p:['Cálido y premium sin ser rojo','Nadie del rubro lo usa como color principal'],
+  c:['Es de la familia de los naranjas de Gestión y Servicemen','Mal impreso se ve marrón'],
+  v:['Cálido y propio','#2F7A45']},
+ {id:'pizarra',name:'Pizarra',tag:'Sobrio técnico',tinta:'',papel:'#F2F3F2',niebla:'#DFE3E3',acc:'#6E95A3',sup:'#34505C',band:'#3F5F6C',prof:'#121D22',fg:'#F2F3F2',bandFg:'#F2F3F2',op:.5,
+  lee:'El gris azulado de las consultoras serias.',
+  p:['Muy serio y profesional','Combina con cualquier foto'],
+  c:['Queda al lado del navy de Estrategia','Poco memorable'],
+  v:['Serio, poco distinto','#956400']},
+ {id:'malva',name:'Malva',tag:'Suave y humano',tinta:'',papel:'#F5F1F3',niebla:'#E7DFE4',acc:'#A97AA8',sup:'#7A4F7A',band:'#875A87',prof:'#2A1729',fg:'#F5F1F3',bandFg:'#F5F1F3',op:.55,
+  lee:'Suave, humano y cercano.',
+  p:['Familia de color totalmente libre en el rubro','Transmite cuidado y escucha'],
+  c:['Puede leerse como estética o bienestar','Menos «empresa» que las demás'],
+  v:['Muy propio, poco corporativo','#956400']},
+];
+const lin=c=>{c/=255;return c<=.04045?c/12.92:((c+.055)/1.055)**2.4};
+const rgb=h=>[1,3,5].map(i=>lin(parseInt(h.substr(i,2),16)));
+const lab=h=>{let [r,g,b]=rgb(h);let x=(r*.4124+g*.3576+b*.1805)/.95047,y=r*.2126+g*.7152+b*.0722,z=(r*.0193+g*.1192+b*.9505)/1.08883;const f=t=>t>.008856?Math.cbrt(t):7.787*t+16/116;[x,y,z]=[f(x),f(y),f(z)];return [116*y-16,500*(x-y),200*(y-z)]};
+const oklch=h=>{const [r,g,b]=rgb(h);let l=Math.cbrt(.4122214708*r+.5363325363*g+.0514459929*b),m=Math.cbrt(.2119034982*r+.6806995451*g+.1073969566*b),s=Math.cbrt(.0883024619*r+.2817188376*g+.6299787005*b);const A=1.9779984951*l-2.4285922050*m+.4505937099*s,B=.0259040371*l+.7827717662*m-.8086757660*s;return [Math.hypot(A,B),(Math.atan2(B,A)*180/Math.PI+360)%360]};
+const okhex=(L,C,h)=>{const a=C*Math.cos(h*Math.PI/180),b=C*Math.sin(h*Math.PI/180);const l=(L+.3963377774*a+.2158037573*b)**3,m=(L-.1055613458*a-.0638541728*b)**3,q=(L-.0894841775*a-1.2914855480*b)**3;const f=x=>{x=Math.max(0,Math.min(1,x));x=x<=.0031308?12.92*x:1.055*x**(1/2.4)-.055;return Math.round(x*255).toString(16).padStart(2,'0')};return '#'+f(4.0767416621*l-3.3077115913*m+.2309699292*q)+f(-1.2684380046*l+2.6097574011*m-.3413193965*q)+f(-.0041960863*l-.7034186147*m+1.7076147010*q)};
+V.forEach(v=>{if(v.id!='rojo')v.tinta=okhex(.215,.028,oklch(v.sup)[1])});
+const ORDER=['rojo','bordo','granate','terracota','cobre','ocre','oliva','bosque','petroleo','pizarra','indigo','navy','ciruela','malva'];
+V.sort((a,b)=>ORDER.indexOf(a.id)-ORDER.indexOf(b.id));
+const dE=(a,b)=>{const A=lab(a),B=lab(b);return Math.hypot(A[0]-B[0],A[1]-B[1],A[2]-B[2])};
+const near=h=>COMP.map(([n,c])=>[n,c,dE(h,c)]).sort((a,b)=>a[2]-b[2])[0];
+const lvl=d=>d<12?['Se confunde','#B3372A']:d<20?['Cercano','#956400']:['Propio','#2F7A45'];
+
+/* rueda */
+const W=document.getElementById('wheel'),cx=220,cy=220,R=c=>40+Math.min(c,.24)/.24*165;
+const P=(h,r)=>[cx+r*Math.cos(h*Math.PI/180),cy-r*Math.sin(h*Math.PI/180)];
+const arc=(a,b,r0,r1,fill,op)=>{const [x1,y1]=P(a,r1),[x2,y2]=P(b,r1),[x3,y3]=P(b,r0),[x4,y4]=P(a,r0),lg=b-a>180?1:0;return `<path d="M${x1} ${y1}A${r1} ${r1} 0 ${lg} 0 ${x2} ${y2}L${x3} ${y3}A${r0} ${r0} 0 ${lg} 1 ${x4} ${y4}Z" fill="${fill}" opacity="${op}"/>`};
+let s='';for(let h=0;h<360;h+=6){const [L]=[0];s+=arc(h,h+6.5,206,214,`oklch(.62 .13 ${h})`,1)}
+[[12,64],[112,150],[198,274]].forEach(([a,b])=>s+=arc(a,b,30,204,'#B3372A',.08));
+[[.05,'#E2DDD3'],[.1,'#E2DDD3'],[.15,'#E2DDD3'],[.2,'#E2DDD3']].forEach(([c,col])=>s+=`<circle cx="${cx}" cy="${cy}" r="${R(c)}" fill="none" stroke="${col}"/>`);
+s+=`<circle cx="${cx}" cy="${cy}" r="30" fill="#F5F2EC"/>`;
+COMP.forEach(([n,c])=>{const [C,h]=oklch(c),[x,y]=P(h,R(C));s+=`<circle cx="${x}" cy="${y}" r="7" fill="${c}" stroke="#fff" stroke-width="1.5"><title>${n} ${c}</title></circle>`});
+const S0=s;
+function drawWheel(sel){let s=S0;
+ V.forEach(v=>{const [C,h]=oklch(v.sup),[x,y]=P(h,R(C)),on=v.id==sel,hoy=v.id=='rojo';
+  if(on)s+=`<circle cx="${x}" cy="${y}" r="17" fill="none" stroke="#16181D" stroke-width="1.5" stroke-dasharray="3 3"/>`;
+  s+=`<rect x="${x-(on?10:6)}" y="${y-(on?10:6)}" width="${on?20:12}" height="${on?20:12}" fill="${v.sup}" stroke="#16181D" stroke-width="${on?2.5:1.2}" opacity="${on?1:.6}"><title>${v.name}</title></rect>`;
+  if(on||hoy){const off=hoy&&!on?-40:(R(C)>120?-44:34),[lx,ly]=P(h,R(C)+off);s+=`<text x="${lx}" y="${ly+3}" text-anchor="middle" style="fill:#16181D;font-weight:${on?700:400}">${on?'GENESIS · '+v.name.toUpperCase():'HOY'}</text>`}});
+ W.innerHTML=s}
+
+/* simulador */
+const vars=v=>`--hero:${v.sup};--fg:${v.fg};--fA:${v.tinta};--fB:${v.papel};--btn:${v.fg==v.tinta?v.tinta:v.tinta};--btnFg:${v.papel};--dot:${v.acc};--op:${v.op};--papelV:${v.papel};--tintaV:${v.tinta};--nieblaV:${v.niebla};--acc:${v.acc};--band:${v.band};--bandFg:${v.bandFg};--prof:${v.prof}`;
+const fi=n=>`<span class="fi">${n?'<s>1</s>':''}<b></b>Gn</span>`;
+const hero=v=>`<div class="bg"><img src="${IMG}" alt="" loading="lazy"></div><div class="hd"><span class="lg">${fi()}Genesis</span><span class="mn"></span></div><div class="tx"><h4>Tu empresa funciona con personas.<br>Nosotros nos ocupamos del resto.</h4><p>Liquidamos sueldos, presentamos las cargas sociales, buscamos a las personas indicadas, capacitamos a tus equipos y cuidamos que trabajen seguros. Para empresas de CABA y GBA.</p><div class="ct"><span class="b1">Pedí una propuesta ↗</span><span class="b2">Ver servicios ↗</span></div></div><div class="wd">${fi(1)}Genesis</div>`;
+const SV=[['2','Ap','Asesoramiento'],['3','Sp','Selección'],['4','Ls','Liquidación'],['5','Cs','Cargas sociales'],['6','Cd','Capacitación'],['7','Sh','Seguridad e hig.']];
+const page=v=>`<div class="sv"><h5><i></i>Servicios</h5><div class="row">${SV.map(([n,s,t],i)=>`<div class="sf${i==2?' on':''}"><s>${n}</s><b></b>${s}<u>${t}</u></div>`).join('')}</div><div class="chips"><span>Liquidación mensual</span><span>Altas y bajas</span><span>F.931</span><span>Recibos digitales</span></div></div><div class="bd">Las personas primero<i></i></div><div class="ftm"><span class="lg"><span class="fi"><b></b>Gn</span>Genesis</span><span class="bt">Hablemos ↗</span></div>`;
+const tabs=document.getElementById('tabs'),big=document.getElementById('big'),pm=document.getElementById('pm'),side=document.getElementById('side'),thumbs=document.getElementById('thumbs');
+function show(id){const sy=window.scrollY;const v=V.find(x=>x.id==id);big.setAttribute('style',vars(v));big.innerHTML=hero(v);pm.setAttribute('style',vars(v));pm.innerHTML=page(v);
+ const rows=[['Superficie',v.sup],['Acento',v.acc]].map(([k,c])=>{const n=near(c),L=lvl(n[2]);return `<div class="near" style="border-color:${L[1]};background:color-mix(in srgb,${L[1]} 7%,#fff)">${k} ${c}: más cerca de <b style="font-size:14px">${n[0]}</b> <span style="display:inline-block;width:10px;height:10px;background:${n[1]};vertical-align:middle"></span> · ΔE ${n[2].toFixed(0)} · <b style="font-size:13px;color:${L[1]}">${L[0]}</b></div>`}).join('');
+ side.innerHTML=`<div><span class="mono muted">${v.tag}</span><h3>${v.name}</h3><p style="font-size:13.5px;color:var(--grafito);margin-top:6px">${v.lee}</p></div>
+ <div class="pal">${[['Tinta',v.tinta],['Papel',v.papel],['Acento',v.acc],['Superficie',v.sup],['Footer',v.prof]].map(([k,c])=>`<div><i style="background:${c}"></i>${k}<br>${c}</div>`).join('')}</div>
+ <div class="logos"><div style="background:${v.papel};color:${v.tinta}"><span class="fi" style="background:${v.tinta};color:${v.papel}"><b style="background:${v.acc}"></b>Gn</span>Genesis</div><div style="background:${v.sup};color:${v.fg}"><span class="fi" style="background:${v.tinta};color:${v.papel}"><b style="background:${v.acc}"></b>Gn</span>Genesis</div></div>
+ ${rows}
+ <ul class="p">${v.p.map(x=>`<li>${x}</li>`).join('')}</ul><ul class="c">${v.c.map(x=>`<li>${x}</li>`).join('')}</ul>
+ <div class="verd" style="background:color-mix(in srgb,${v.v[1]} 10%,#fff);color:${v.v[1]}">${v.v[0]}</div>`;
+ document.querySelectorAll('[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v==id));applyAll(v);if(Math.abs(window.scrollY-sy)>1)window.scrollTo(0,sy);}
+V.forEach(v=>{tabs.insertAdjacentHTML('beforeend',`<button data-v="${v.id}" aria-pressed="false"><i style="background:${v.sup}"></i>${v.name}</button>`);
+ const n=near(v.sup);thumbs.insertAdjacentHTML('beforeend',`<button class="th" data-v="${v.id}" aria-pressed="false"><div class="hm" style="${vars(v)}">${hero(v)}</div><div class="thpal">${[v.tinta,v.papel,v.acc,v.sup,v.prof].map(c=>`<i style="background:${c}"></i>`).join('')}</div><div class="m"><b>${v.name}</b><span class="muted">Más cerca de ${n[0]} · ΔE ${n[2].toFixed(0)}</span></div></button>`)});
+document.querySelectorAll('#tabs [data-v],#thumbs [data-v]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();show(b.dataset.v)}));
+const POS={rojo:[175,245,'El mismo color que Adecco y Bayton: el color lo pone en su grupo, entre las grandes y masivas.'],
+ bordo:[190,358,'Familia del rojo, como Adecco y Bayton, pero más oscuro: se lee más corporativo.'],
+ granate:[112,338,'Rojo profundo: junto a Adecco y Bayton, apenas más sobrio.'],
+ terracota:[205,228,'Entre el rojo de Bayton y el naranja de Gestión, del lado cálido.'],
+ cobre:[298,212,'Cerca de los naranjas de Gestión y Servicemen, pero más sobrio y más cercano.'],
+ ocre:[232,132,'Familia de Gestión (naranja y lima): cálido, entre lo masivo y lo cercano.'],
+ oliva:[292,118,'Familia del lima de CONA y Gestión, más apagado: cálido y natural.'],
+ bosque:[410,182,'Familia de los verdes de CONA y Consultores, pero oscuro y sobrio: del lado cercano.'],
+ petroleo:[372,374,'Entre el turquesa de Pullmen y el celeste de Conmor: serio y frío.'],
+ pizarra:[452,276,'Al lado del navy de Estrategia: serio y frío, poco distinto.'],
+ indigo:[292,372,'Junto a los azules de Servicemen y Pullmen: corporativo.'],
+ navy:[232,282,'Dentro del grupo azul con Pullmen, Servicemen y Consultores: Genesis se pierde.'],
+ ciruela:[478,128,'Familia libre (violetas y bordós fríos): conserva su lugar propio, cálido y boutique.'],
+ malva:[532,80,'Familia libre y la más suave: el extremo cercano y humano.']};
+const mapPos=v=>{const [x,y]=POS[v.id];return [x-20,y-20]};
+const quad=(x,y)=>(y+20<220?'cálido / humano':'frío / corporativo')+', '+(x+20<330?'del lado masivo':'del lado boutique');
+const famOf=v=>{const h=oklch(v.sup)[1];return h<45||h>355?1:h<65?3:h>=100&&h<150?2:h>=195&&h<285?0:4};
+function applyAll(v){const RS=document.documentElement.style;RS.setProperty('--gT',v.tinta);RS.setProperty('--gP',v.papel);RS.setProperty('--gA',v.acc);
+ const st=document.querySelectorAll('#gnStrip i');[v.sup,v.niebla,v.prof].forEach((c,i)=>st[i].style.background=c);document.querySelector('#gnStrip b').textContent='Genesis · '+v.name;
+ const cells=['','','','','',''];const fm=famOf(v);cells[fm]=`<span class="cell" style="background:${v.sup}"></span>${fm==4||v.id!='rojo'?`<div style="font-size:11px;color:var(--grafito);font-weight:400">${v.name}</div>`:''}`;cells[5]=`<span class="cell s" style="background:${v.tinta}"></span>`;
+ document.getElementById('gnRow').innerHTML=`<td>Genesis · ${v.name}</td>`+cells.map(c=>`<td>${c}</td>`).join('')+'<td>Inter Tight + IBM Plex Mono</td>';
+ const [x,y]=mapPos(v),n=near(v.sup),hoyP=mapPos(V.find(q=>q.id=='rojo'));document.getElementById('gnMap').style.transform=`translate(${x}px,${y}px)`;
+ document.getElementById('gnHalo').setAttribute('fill',v.sup);document.getElementById('gnRect').setAttribute('fill',v.tinta);document.getElementById('gnTxt').style.fill=v.papel;document.getElementById('gnDot').setAttribute('fill',v.acc);document.getElementById('gnName').textContent=v.name.toUpperCase();
+ const moved=v.id!='rojo';const gh=document.getElementById('gnGhost');gh.style.opacity=moved?1:0;gh.setAttribute('transform',`translate(${hoyP[0]-497} ${hoyP[1]-78})`);const pl=document.getElementById('gnPath');pl.setAttribute('x1',hoyP[0]+20);pl.setAttribute('y1',hoyP[1]+20);pl.setAttribute('x2',x+20);pl.setAttribute('y2',y+20);pl.style.opacity=moved?1:0;
+ document.getElementById('mapNote').innerHTML=`<b>Con ${v.name.toLowerCase()}:</b> ${POS[v.id][2]} Queda ${quad(x,y)}.`;
+ document.getElementById('cmpColor').textContent=v.id=='rojo'?'Rojo #D4351F como superficie (hero, banda, footer) con foto en multiplicar; tinta y papel de base':`${v.name} ${v.sup} como superficie (hero, banda, footer) y ${v.acc} como acento y punto del logo; tinta ${v.tinta} y papel ${v.papel} de base`;
+ drawWheel(v.id);try{localStorage.setItem('gnPal',v.id)}catch(e){}}
+const pickHTML=V.map(v=>`<button data-v="${v.id}" aria-pressed="false"><i style="background:${v.sup}"></i>${v.name}</button>`).join('');
+document.querySelectorAll('[data-pick]').forEach(el=>el.innerHTML=`<span class="lb">Probá Genesis en otro color</span>${pickHTML}<span class="hint">Tocá un color: el gráfico se actualiza y Genesis se ubica donde quedaría.</span>`);
+document.body.insertAdjacentHTML('beforeend',`<div class="fab" role="group" aria-label="Paleta de Genesis"><div class="t">Paleta de Genesis <span>tocá para cambiar</span></div><div class="r">${pickHTML}</div></div>`);
+document.querySelectorAll('.pick [data-v],.fab [data-v]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.v)));
+let first='rojo';try{first=localStorage.getItem('gnPal')||'rojo'}catch(e){}
+show(V.some(x=>x.id==first)?first:'rojo');
+})();
+</script>
+<!-- ACCIONES -->
+<section id="acciones"><div class="wrap">
+  <div class="over mono"><b>06</b> · Plan</div>
+  <h2>Cómo hacemos que Genesis se destaque</h2>
+  <p class="lead">Ordenado por impacto. Las tres primeras se pueden aplicar a la web antes del lanzamiento.</p>
+
+  <div class="actions">
+    <div class="act"><div class="k">01</div><div><span class="mono prio a">Prioridad alta · Web</span><h4>Hablarle a la empresa desde el primer segundo</h4><p>Casi todos los competidores abren con el candidato o con frases abstractas. El título de Genesis tiene que nombrar el problema de la PyME y la zona.</p></div><div class="ex"><span class="mono">Ejemplo de dirección</span>«Tu área de Recursos Humanos, sin tener que armarla.» · «Selección, sueldos e higiene y seguridad para empresas de CABA y GBA.»</div></div>
+    <div class="act"><div class="k">02</div><div><span class="mono prio a">Prioridad alta · Color</span><h4>Decidir la paleta y aplicarla completa</h4><p>O seguimos en rojo, o pasamos a verde bosque (o a ocre). Si se cambia, se cambia todo junto: tinta, papel, acento, el punto del logo, overlays de fotos, banda, footer y puntos de servicios. Si queda un solo rojo suelto, la marca no se entiende.</p></div><div class="ex"><span class="mono">Regla</span>Un solo acento por paleta. El punto del logo siempre es ese acento.</div></div>
+    <div class="act"><div class="k">03</div><div><span class="mono prio a">Prioridad alta · Confianza</span><h4>Ganar en lo técnico, que es donde fallan</h4><p>Servicemen con SSL vencido, Pullmen en Wix, Conmor con plantilla vieja. Una web rápida (LCP &lt; 1,8 s), con HTTPS, formulario que responde y WhatsApp directo ya transmite profesionalismo.</p></div><div class="ex"><span class="mono">Mostrar</span>Habilitaciones, matrícula de higiene y seguridad, cámaras o asociaciones (como hace Conmor con FAETT).</div></div>
+    <div class="act"><div class="k">04</div><div><span class="mono prio">Prioridad media · Posicionamiento</span><h4>Convertir «ser chicos» en el argumento</h4><p>No podemos competir en años ni en oficinas. Sí en trato: una persona a cargo de tu cuenta, respuesta en el día, sin 0810.</p></div><div class="ex"><span class="mono">Pruebas concretas</span>Foto y nombre de quien atiende · tiempo de respuesta prometido · «sin mínimo de empleados».</div></div>
+    <div class="act"><div class="k">05</div><div><span class="mono prio">Prioridad media · Sistema</span><h4>Usar las fichas en todos lados</h4><p>La tabla periódica es lo único del rubro que se recuerda como sistema. Llevarla a propuestas, firmas de mail, posts, carteles y la cartera de servicios.</p></div><div class="ex"><span class="mono">Aplicación</span>Cada propuesta comercial arranca con las fichas contratadas. Cada post de servicio, con su ficha (Ls, Sh…).</div></div>
+    <div class="act"><div class="k">06</div><div><span class="mono prio">Prioridad media · Lenguaje</span><h4>Cambiar abstracciones por tareas</h4><p>Nada de «capital humano» ni «talento». Decir qué se resuelve, en el idioma del dueño de la PyME y con voseo.</p></div><div class="ex"><span class="mono">En vez de… decir</span>«Gestión integral del capital humano» → «Liquidamos los sueldos y te avisamos antes de cada vencimiento.»</div></div>
+    <div class="act"><div class="k">07</div><div><span class="mono prio">Prioridad media · SEO local</span><h4>Ganar las búsquedas por servicio y zona</h4><p>Los grandes posicionan la marca, no el servicio + barrio. Las 6 páginas «… en CABA y GBA» son la entrada barata a búsquedas que ellos no trabajan.</p></div><div class="ex"><span class="mono">Ejemplos</span>«liquidación de sueldos para pymes CABA» · «servicio de higiene y seguridad GBA».</div></div>
+    <div class="act"><div class="k">08</div><div><span class="mono prio">Prioridad baja · Imagen</span><h4>Fotos con criterio, no de catálogo</h4><p>Tres o cuatro fotos monocromas y cálidas, de trabajo real (planillas, obra, oficina chica), sin apretones de manos ni gente sonriendo a cámara.</p></div><div class="ex"><span class="mono">Filtro</span>Si la foto podría estar en el sitio de Adecco, no va.</div></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="mono">Metodología y fuentes</span>
+  <p style="margin-top:10px">Colores y tipografías medidos el 05/10/2026 sobre el sitio público de cada marca (estilos computados por superficie, o la hoja de estilos cuando el sitio no cargaba en el navegador). La ubicación en el mapa de posicionamiento es cualitativa. Los datos de trayectoria y escala salen de los propios sitios y de sus perfiles públicos.</p>
+  <ul>
+    <li><a href="https://www.pullmen.com/">pullmen.com</a></li>
+    <li><a href="https://www.adecco.com/es-ar">adecco.com/es-ar</a></li>
+    <li><a href="http://gruposervicemen.com">gruposervicemen.com</a></li>
+    <li><a href="https://www.cona.com.ar/">cona.com.ar</a></li>
+    <li><a href="https://www.randstad.com.ar/">randstad.com.ar</a></li>
+    <li><a href="https://www.conmor.com.ar/">conmor.com.ar</a></li>
+    <li><a href="https://bayton.com/">bayton.com</a></li>
+    <li><a href="https://estrategiarrhh.com.ar/">estrategiarrhh.com.ar</a></li>
+    <li><a href="https://www.grupo-gestion.com.ar/">grupo-gestion.com.ar</a></li>
+    <li><a href="https://www.consultoresdeempresas.com/">consultoresdeempresas.com</a></li>
+  </ul>
+</div></footer>
+
+</body>
+</html>

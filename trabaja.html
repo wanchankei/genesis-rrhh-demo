@@ -19,7 +19,7 @@
 .hd.sc{background:rgba(245,242,236,.92);color:var(--ink);border-color:var(--line)}
 .hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
 .hd .lk{font-size:18px}
-.hd nav{display:flex;gap:28px;font:500 13.5px var(--f-b)}
+.hd nav{display:flex;gap:clamp(16px,2vw,28px);font:500 13.5px var(--f-b)}
 .hd nav a{position:relative;padding:6px 0}
 .hd nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .3s var(--eo)}
 @media (hover:hover){.hd nav a:hover::after{transform:scaleX(1);transform-origin:left}}
@@ -185,7 +185,7 @@
 
 <header class="hd" id="hd"><div class="wrap">
   <a href="index.html" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
-  <nav aria-label="Principal"><a href="index.html#servicios">Servicios</a><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Buscás trabajo</a></nav>
+  <nav aria-label="Principal"><a href="index.html#servicios">Servicios</a><a href="index.html#trayectoria">Trayectoria</a><a href="index.html#como">Cómo trabajamos</a><a href="index.html#faq">Preguntas</a><a href="trabaja.html" aria-current="page">Buscás trabajo</a><a href="colores.html">Prueba de color</a></nav>
   <a class="btn sm glass" href="index.html#contacto">Hablemos</a>
   <button class="burger" aria-label="Menú" aria-expanded="false"></button>
 </div></header>
@@ -267,7 +267,7 @@ const D=DATA,S=D.servicios,$=s=>document.querySelector(s);
 const GN=t=>`<div class="gn" style="--t:${t}" aria-hidden="true"><span class="n1">1</span><span class="d"></span><div class="g"><span>G</span><span>n</span></div></div>`;
 const ARR='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
 // Menú mobile numerado, igual que la home
-const MN=[['index.html#servicios','Servicios'],['index.html#trayectoria','Trayectoria'],['index.html#como','Cómo trabajamos'],['index.html#faq','Preguntas'],['trabaja.html','Buscás trabajo']];
+const MN=[['index.html#servicios','Servicios'],['index.html#trayectoria','Trayectoria'],['index.html#como','Cómo trabajamos'],['index.html#faq','Preguntas'],['trabaja.html','Buscás trabajo'],['colores.html','Prueba de color']];
 $('#mnavL').innerHTML=MN.map(([h,t],i)=>`<a href="${h}" style="--i:${i}"><span class="n">0${i+1}</span>${t}${ARR}</a>`).join('');
 document.querySelectorAll('.hd .btn,.mnav .btn,.ft .btn').forEach(b=>{const t=b.textContent.trim(),i=ARR;b.innerHTML=`<span class="tb"><span>${t}</span><span aria-hidden="true">${t}</span></span><span class="ab" aria-hidden="true">${i}${i}</span>`});
 $('#lkGn').outerHTML=GN('1.55em');
