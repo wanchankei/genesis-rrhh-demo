@@ -21,6 +21,7 @@
 .hd.sc{background:rgba(245,242,236,.92);color:var(--ink);border-color:var(--line)}
 .hd .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
 .hd .lk{font-size:18px}
+.hd .acts{display:flex;gap:8px}
 .hd nav{display:flex;gap:clamp(16px,2vw,28px);font:500 13.5px var(--f-b)}
 .hd nav a{position:relative;padding:6px 0}
 .hd nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .3s var(--eo)}
@@ -39,7 +40,7 @@
 .nav-open .burger::before{transform:translateY(4px) rotate(45deg)}
 .nav-open .burger::after{left:12px;transform:translateY(-4px) rotate(-45deg)}
 .nav-open .hd .lk .gn{background:var(--ink);color:var(--paper)}.nav-open .hd .lk .gn .d{background:var(--red)}
-@media (max-width:900px){
+@media (max-width:1100px){
   .hd nav,.hd .btn{display:none}.burger{display:block}
   .mnav{display:flex;flex-direction:column;justify-content:space-between;gap:32px;position:fixed;inset:60px 0 0;background:var(--paper);color:var(--ink);padding:8px var(--gut) calc(24px + env(safe-area-inset-bottom));z-index:49;overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .3s var(--eo),visibility .3s}
   .mnav nav a{display:grid;grid-template-columns:36px 1fr 22px;align-items:center;font:700 clamp(28px,7.6vw,36px)/1.1 var(--f-d);letter-spacing:-.04em;padding:16px 0;border-bottom:1px solid var(--line);opacity:0;transform:translateY(14px);transition:opacity .4s var(--eo),transform .5s var(--eo),color .2s;transition-delay:calc(var(--i)*45ms)}
@@ -329,7 +330,7 @@
 <header class="hd" id="hd"><div class="wrap">
   <a href="#" class="lk" aria-label="Genesis, inicio"><span id="lkGn"></span>Genesis</a>
   <nav aria-label="Principal"><a href="#servicios">Servicios</a><a href="#trayectoria">Trayectoria</a><a href="#como">Cómo trabajamos</a><a href="#faq">Preguntas</a><a href="trabaja.html">Buscás trabajo</a><a href="colores.html">Prueba de color</a></nav>
-  <a class="btn sm glass" id="navBtn" href="#contacto">Hablemos</a>
+  <div class="acts"><a class="btn sm glass" href="presentacion.html">Presentación</a><a class="btn sm glass" id="navBtn" href="#contacto">Hablemos</a></div>
   <button class="burger" aria-label="Menú" aria-expanded="false"></button>
 </div></header>
 <div class="mnav" id="mnav"><nav aria-label="Principal mobile" id="mnavL"></nav>
@@ -454,7 +455,7 @@ const SOC={
 document.querySelectorAll('[data-soc]').forEach(el=>el.innerHTML=Object.entries(SOC).map(([k,[n,svg]])=>`<a href="${D[k]}" target="_blank" rel="noopener" aria-label="${n}">${svg}</a>`).join(''));
 $('#wab').href=D.wa;$('#wab').innerHTML=SOC.wa[1];$('#liBtn').href=D.li;
 // Menú mobile numerado
-const MN=[['#servicios','Servicios'],['#trayectoria','Trayectoria'],['#como','Cómo trabajamos'],['#faq','Preguntas'],['trabaja.html','Buscás trabajo'],['colores.html','Prueba de color']];
+const MN=[['#servicios','Servicios'],['#trayectoria','Trayectoria'],['#como','Cómo trabajamos'],['#faq','Preguntas'],['trabaja.html','Buscás trabajo'],['colores.html','Prueba de color'],['presentacion.html','Presentación']];
 $('#mnavL').innerHTML=MN.map(([h,t],i)=>`<a href="${h}" style="--i:${i}"><span class="n">0${i+1}</span>${t}${ICON.arrow}</a>`).join('');
 // Trayectoria (del CV de Catriel)
 const TR=[
